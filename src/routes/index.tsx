@@ -4,7 +4,7 @@ import { Reveal } from "@/components/Reveal";
 import { Terminal, type Line } from "@/components/Terminal";
 import { Integrations } from "@/components/Integrations";
 import { Faq } from "@/components/Faq";
-import logo from "@/assets/cerbere-logo.jpg";
+import logo from "@/assets/cerbere-logo.jpeg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
