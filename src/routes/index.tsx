@@ -739,10 +739,10 @@ function Index() {
         <div className="px-5 pb-10 pt-20 text-center">
           <div className="relative mx-auto mb-2 size-[220px] overflow-hidden shadow-[0_20px_50px_oklch(0.19_0.008_45/0.28)]">
             <img
-              src={logo.url}
-              alt="Cerbere AG guardian logo"
-              className="size-full object-cover"
-            />
+           src={logo}
+            alt="Cerbere AG guardian logo"
+           className="size-full object-cover"
+        />
 
             <div className="animate-logo-scan pointer-events-none absolute inset-x-0 h-[34%] bg-gradient-to-b from-transparent via-white/55 to-transparent" />
           </div>
