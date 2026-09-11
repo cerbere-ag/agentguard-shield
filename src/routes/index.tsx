@@ -4,7 +4,7 @@ import { Reveal } from "@/components/Reveal";
 import { Terminal, type Line } from "@/components/Terminal";
 import { Integrations } from "@/components/Integrations";
 import { Faq } from "@/components/Faq";
-import logo from "@/assets/cerbere-logo.jpg.asset.json";
+import logo from "@/assets/cerbere-logo.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -325,7 +325,7 @@ function Index() {
             className="flex items-center gap-2.5 font-mono text-[17px] font-bold"
           >
             <img
-              src={logo.url}
+              src={logo}
               alt="Cerbere AG logo"
               className="size-8 shrink-0 border border-amber/40 object-cover"
             />
