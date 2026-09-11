@@ -38,7 +38,7 @@ const rotating = [
   "blocks prompt injection before it reaches your tools",
   "stops data exfiltration before it leaves your systems",
   "catches destructive commands before they run",
-  "shows every agent decision in one audit trail",
+  "observes every agent decision in one audit trail",
 ];
 
 const dim = "text-paper/40";
@@ -119,7 +119,7 @@ const runLines: Line[] = [
     { t: " -> 🛡️ Runtime risk DENY: local policy: Exfiltration detected in email" },
   ],
   [],
-  [{ t: "[AGENT] ", c: dim }, { t: "execute_command({'command': 'rm -rf /data/customers'})" }],
+  [{{ t: "[AGENT] ", c: dim }, { t: "execute_command({'command': 'rm -rf /data/customers'})" }],
   [
     { t: "[CERBERE] " },
     { t: "BLOCKED", c: deny },
@@ -207,17 +207,42 @@ const plans = [
     featured: false,
     features: [
       "Unlimited agents",
-      "Self hosted license",
-      "Dedicated support and SLA",
-      "Custom compliance reporting",
-      "Onboarding and policy design",
+      "Self hosted, your data residency",
+      "SLA and support contract",
+      "Custom retention and policies",
+      "Compliance packages",
+      "Dedicated ops channel",
     ],
     cta: {
-      label: "Contact us",
-      href: "mailto:christopher-ag@cerbereag.site?subject=Enterprise%20inquiry",
+      label: "Talk to sales",
+      href: "mailto:christopher-ag@cerbereag.site?subject=Enterprise",
     },
   },
 ];
+
+function CopyableCode({ code }: { code: string }) {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = async () => {
+    await navigator.clipboard.writeText(code);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  return (
+    <button
+      onClick={handleCopy}
+      className="group w-full cursor-pointer rounded-sm border border-line-black bg-black/30 p-4 text-left transition-all hover:border-amber hover:bg-black/50 active:scale-[0.98]"
+    >
+      <div className="font-mono text-xs text-paper/50 group-hover:text-amber transition-colors">
+        {copied ? "✓ copied" : "click to copy"}
+      </div>
+      <div className="mt-2 font-mono text-sm text-paper group-hover:text-amber transition-colors break-all">
+        {code}
+      </div>
+    </button>
+  );
+}
 
 function Index() {
   const [rot, setRot] = useState(0);
@@ -300,26 +325,28 @@ function Index() {
           </Reveal>
           <Reveal>
             <p className="mt-6 max-w-[46ch] text-[19px] text-paper/70">
-              Runtime security and observability for AI agents. It is the agentic era, stay in
-              control.
+              Runtime security and observability for AI agents. It is the agentic era. Stay in control.
             </p>
           </Reveal>
           <Reveal>
-            <div className="mt-9 flex flex-wrap gap-3.5">
-              <a
-                href={`${APP}/login`}
-                className="inline-flex items-center rounded-sm bg-amber px-4.5 py-2.5 font-mono text-sm text-ink transition-colors hover:bg-amber-deep"
-              >
-                Get started free
-              </a>
-              <a
-                href={GITHUB}
-                target="_blank"
-                rel="noopener"
-                className="inline-flex items-center rounded-sm border border-line-black px-4.5 py-2.5 font-mono text-sm transition-colors hover:border-amber hover:text-amber"
-              >
-                View on GitHub
-              </a>
+            <div className="mt-9 space-y-5">
+              <div className="flex flex-wrap gap-3.5">
+                <a
+                  href={`${APP}/login`}
+                  className="inline-flex items-center rounded-sm bg-amber px-4.5 py-2.5 font-mono text-sm text-ink transition-colors hover:bg-amber-deep"
+                >
+                  Get started free
+                </a>
+                <a
+                  href={GITHUB}
+                  target="_blank"
+                  rel="noopener"
+                  className="inline-flex items-center rounded-sm border border-line-black px-4.5 py-2.5 font-mono text-sm transition-colors hover:border-amber hover:text-amber"
+                >
+                  View on GitHub
+                </a>
+              </div>
+              <CopyableCode code="pip install cerbere-ag" />
             </div>
           </Reveal>
         </div>
@@ -347,69 +374,40 @@ function Index() {
         </Reveal>
       </section>
 
+      {/* Integrations section - moved up */}
       <Integrations />
 
       {/* see it work */}
-      <section className="bg-cream py-20 text-coal md:py-28">
+      <section className="border-t border-line-black bg-cream py-20 text-coal md:py-28">
         <div className="wrap">
           <Reveal className="max-w-2xl">
             <span className="eyebrow">see it work</span>
             <h2 className="mt-3 text-[clamp(26px,3.4vw,36px)]">
-              Two minutes from install to your first blocked action.
+              Watch security and observability in action.
             </h2>
-            <p className="mt-3.5 max-w-[52ch] text-base text-coal/70">
-              No dashboard to configure first. Install the SDK, wrap the tools your agent can call,
-              and watch Cerbere AG decide. This is a real run, copied from a terminal.
-            </p>
           </Reveal>
-          <div className="mt-12 grid items-start gap-6 lg:grid-cols-[1fr_1.35fr]">
+          <div className="mt-12 grid gap-8 lg:grid-cols-2">
             <Reveal>
-              <Terminal title="PowerShell - install" lines={installLines} />
+              <Terminal title="install and run" lines={installLines} />
             </Reveal>
             <Reveal>
-              <Terminal title="agent_demo.py - live run" lines={runLines} height="min-h-[430px]" />
+              <Terminal title="security decisions" lines={runLines} height="min-h-[340px]" />
             </Reveal>
           </div>
         </div>
       </section>
 
-      {/* observability */}
-      <section className="border-t border-line-black bg-ink py-20 md:py-28">
-        <div className="wrap">
-          <Reveal className="max-w-2xl">
-            <span className="eyebrow">observability</span>
-            <h2 className="mt-3 text-[clamp(26px,3.4vw,36px)]">
-              Blocking is half the job. Seeing is the other half.
-            </h2>
-            <p className="mt-3.5 max-w-[52ch] text-base text-paper/65">
-              An agent you cannot observe is an agent you cannot trust. Cerbere AG records every
-              call it guards, so security and visibility come from the same layer.
-            </p>
-          </Reveal>
-          <div className="mt-12 grid gap-px border border-line-black bg-line-black md:grid-cols-3">
-            {observability.map((o) => (
-              <Reveal key={o.tag} className="bg-ink p-8">
-                <span className="font-mono text-[12.5px] font-semibold text-amber">{o.tag}</span>
-                <h3 className="mt-3.5 text-xl">{o.title}</h3>
-                <p className="mt-3 text-[15px] text-paper/65">{o.body}</p>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* mission */}
-      <section className="border-t border-line-black bg-ink py-20 md:py-28">
+      {/* Philosophy/Context Section */}
+      <section className="bg-ink py-20 text-paper md:py-28">
         <div className="wrap">
           <Reveal>
             <p className="max-w-[30ch] font-display text-[clamp(22px,2.6vw,29px)] font-medium leading-[1.32]">
-              The internet's early years taught us that an open, unguarded system gets exploited.
-              Agentic AI is repeating that lesson, faster.
+              The internet's early years taught us that an open, unguarded system gets exploited. Agentic AI is repeating that lesson, faster.
             </p>
           </Reveal>
           <div className="mt-14 grid gap-10 md:grid-cols-2 md:gap-16">
             <Reveal className="border-l border-line-black pl-6">
-              <span className="mb-2.5 block font-mono text-sm text-amber">1995, the open web</span>
+              <span className="mb-2.5 block font-mono text-sm text-amber">1995 - the open web</span>
               <h3 className="mb-3 text-xl">Every new connection was a new exposure.</h3>
               <p className="max-w-[40ch] text-[15.5px] text-paper/65">
                 As homes and offices came online, viruses, worms and bad actors found an unguarded
@@ -419,7 +417,7 @@ function Index() {
             </Reveal>
             <Reveal className="border-l border-line-black pl-6">
               <span className="mb-2.5 block font-mono text-sm text-amber">
-                2026, the agentic era
+                2026 - the agentic era
               </span>
               <h3 className="mb-3 text-xl">Every new agent is a new attack surface.</h3>
               <p className="max-w-[40ch] text-[15.5px] text-paper/65">
@@ -428,6 +426,30 @@ function Index() {
                 intent before execution, autonomy becomes risk.
               </p>
             </Reveal>
+          </div>
+        </div>
+      </section>
+
+      {/* observability */}
+      <section className="bg-amber py-20 text-coal md:py-28">
+        <div className="wrap">
+          <Reveal className="max-w-2xl">
+            <span className="eyebrow">observability</span>
+            <h2 className="mt-3 text-[clamp(26px,3.4vw,36px)]">
+              Full visibility into every agent decision.
+            </h2>
+            <p className="mt-3.5 max-w-[52ch] text-base text-coal/70">
+              Security means nothing without observability. See every trace, every decision, and understand your agents end to end.
+            </p>
+          </Reveal>
+          <div className="mt-12 grid gap-px border border-line-coal bg-line-coal md:grid-cols-3">
+            {observability.map((item) => (
+              <Reveal key={item.tag} className="bg-amber p-8">
+                <span className="font-mono text-[12.5px] font-semibold text-coal/60">{item.tag}</span>
+                <h3 className="mb-3 mt-3.5 text-xl text-coal">{item.title}</h3>
+                <p className="text-[15px] text-coal/75">{item.body}</p>
+              </Reveal>
+            ))}
           </div>
         </div>
       </section>
