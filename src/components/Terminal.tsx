@@ -51,6 +51,9 @@ export function Terminal({
     let ti = 0;
     let ci = 0;
     let timer: ReturnType<typeof setTimeout>;
+    const built: Line[] = [];
+    setVisible([]);
+    setDone(false);
 
     const step = () => {
       if (li >= lines.length) {
@@ -58,25 +61,21 @@ export function Terminal({
         return;
       }
       const line = lines[li] ?? [];
+      while (built.length <= li) built.push([]);
       const token = line[ti];
       if (!token) {
         li += 1;
         ti = 0;
         ci = 0;
-        setVisible((prev) => [...prev, []]);
+        setVisible(built.map((l) => l.slice()));
         timer = setTimeout(step, lineDelay);
         return;
       }
       ci += 1;
-      const partial = token.t.slice(0, ci);
-      setVisible((prev) => {
-        const next = prev.slice();
-        while (next.length <= li) next.push([]);
-        const cur = (next[li] ?? []).slice();
-        cur[ti] = { t: partial, c: token.c };
-        next[li] = cur;
-        return next;
-      });
+      const cur = built[li] ?? [];
+      cur[ti] = { t: token.t.slice(0, ci), c: token.c };
+      built[li] = cur;
+      setVisible(built.map((l) => l.slice()));
       if (ci >= token.t.length) {
         ti += 1;
         ci = 0;
