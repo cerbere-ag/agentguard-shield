@@ -1,3 +1,4 @@
+
 import { Reveal } from "./Reveal";
 
 type Integration = {
@@ -50,16 +51,17 @@ const integrations: Integration[] = [
 
 function IntegrationItem({ item }: { item: Integration }) {
   return (
-    <div className="flex shrink-0 items-center gap-3 border border-line-black bg-ink px-5 py-3">
+    <div className="group flex shrink-0 items-center gap-3 border border-line-black bg-ink px-5 py-3">
       <span className="flex h-7 w-7 items-center justify-center">
         {item.logo ? (
           <img
             src={item.logo}
             alt={`${item.name} logo`}
-            className="h-6 w-6 object-contain"
+            className="h-6 w-6 object-contain grayscale opacity-70 transition-opacity duration-200 group-hover:opacity-100"
             loading="lazy"
             onError={(event) => {
               event.currentTarget.style.display = "none";
+
               const fallback = event.currentTarget.nextElementSibling;
 
               if (fallback instanceof HTMLElement) {
@@ -77,7 +79,7 @@ function IntegrationItem({ item }: { item: Integration }) {
         </span>
       </span>
 
-      <span className="whitespace-nowrap text-sm font-medium text-paper">
+      <span className="whitespace-nowrap text-sm font-medium text-paper/75 transition-colors duration-200 group-hover:text-paper">
         {item.name}
       </span>
     </div>
@@ -90,6 +92,7 @@ function IntegrationRow() {
   return (
     <div className="relative mt-8 overflow-hidden border-y border-line-black py-3">
       <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-ink to-transparent" />
+
       <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-ink to-transparent" />
 
       <div className="integration-marquee flex w-max gap-3">
@@ -157,3 +160,4 @@ export function Integrations() {
     </section>
   );
 }
+
