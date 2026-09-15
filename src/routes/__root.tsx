@@ -111,14 +111,37 @@ function RootShell({ children }: { children: ReactNode }) {
     <html lang="en">
       <head>
         <HeadContent />
+        
+        {/* 1. COLLEZ LE PREMIER SCRIPT GTM ICI (dans le <head>) */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-MK76ZMD6');`
+          }}
+        />
+        {/* Fin Google Tag Manager */}
+        
       </head>
       <body>
+        {/* 2. COLLEZ LE SECOND SCRIPT GTM ICI (juste après l'ouverture de <body>) */}
+        <noscript
+          dangerouslySetInnerHTML={{
+            __html: `<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MK76ZMD6"
+height="0" width="0" style="display:none;visibility:hidden"></iframe>`
+          }}
+        />
+        {/* Fin Google Tag Manager (noscript) */}
+
         {children}
         <Scripts />
       </body>
     </html>
   );
 }
+
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
