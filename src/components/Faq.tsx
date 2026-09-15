@@ -9,57 +9,31 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 
-type Qa = { q: string; a: string; tag: string };
-
-const items: Qa[] = [
-  {
-    tag: "getting started",
-    q: "How long does it take to protect a first agent?",
-    a: "About two minutes. Install the package with pip, set your API key, wrap the tools your agent can call, and the first decision is recorded. There is no dashboard to configure before you start.",
-  },
-  {
-    tag: "security",
-    q: "What exactly gets blocked?",
-    a: "Prompt injection reaching your tools, data exfiltration through email or HTTP calls, destructive commands such as recursive deletes, and any action that breaks a policy you defined. Each decision is evaluated before the tool runs, never after.",
-  },
-  {
-    tag: "observability",
-    q: "What do I actually see in the dashboard?",
-    a: "Every agent action as a trace: the tool called, the arguments, the checks that ran, the decision, the latency and the token cost. Allowed actions are recorded too, so you get a full timeline of agent behaviour, not only the incidents.",
-  },
-  {
-    tag: "observability",
-    q: "Can I export traces to my existing tooling?",
-    a: "Yes. Traces and audit events are available through the HTTP collector and can be forwarded to your own logging or SIEM pipeline. Decisions can be cryptographically signed so an audit trail stays verifiable.",
-  },
-  {
-    tag: "performance",
-    q: "Does it slow my agent down?",
-    a: "Local policy checks run in the process and cost a few milliseconds. Telemetry is sent asynchronously, so the collector never sits on your critical path. If the collector is unreachable, you choose between fail open and fail closed.",
-  },
-  {
-    tag: "deployment",
-    q: "Can I run it fully on my own infrastructure?",
-    a: "Yes. Point the SDK at a local collector and nothing leaves your network, or take a self hosted license for high volume and regulated environments with your own data residency.",
-  },
-  {
-    tag: "privacy",
-    q: "Do you store my prompts and tool payloads?",
-    a: "Sensitive values are redacted before anything is sent. You control which fields are captured, and on local or self hosted deployments the data never leaves your systems.",
-  },
-  {
-    tag: "coverage",
-    q: "Which frameworks and providers are supported?",
-    a: "Python SDK, MCP clients and servers, the HTTP gateway, Composio, OpenAI, Anthropic, LangGraph and CrewAI. Anything else can be covered through the language agnostic HTTP boundary.",
-  },
-  {
-    tag: "pricing",
-    q: "What happens when I outgrow the free plan?",
-    a: "Free covers two agents with local deployment and a seven day audit trail. Moving to Pro or Team adds more agents, cloud deployment, alerts, longer retention and custom policies. No migration is needed, only a plan change.",
-  },
-];
-
 export function Faq() {
+  // Définition des questions à l'intérieur du composant pour éviter les erreurs de portée
+  const faqs = [
+    {
+      q: "Comment Cerbere AG détecte-t-il les injections de prompt ?",
+      a: "Nous utilisons un moteur à 3 couches : des motifs regex ultra-rapides, un classifieur ML léger et un juge LLM pour les cas ambigus. Tout cela s'exécute en quelques millisecondes avant que le prompt n'atteigne votre modèle.",
+    },
+    {
+      q: "Est-ce que mes données quittent mon infrastructure ?",
+      a: "Non. Avec le déploiement local ou self-hosted, toutes les vérifications se font sur votre propre réseau. Aucune donnée sensible n'est envoyée à des serveurs tiers.",
+    },
+    {
+      q: "Quels frameworks d'agents sont compatibles ?",
+      a: "Notre SDK Python s'intègre nativement avec LangGraph, CrewAI et tout agent utilisant des appels d'outils standard. Nous supportons également MCP pour une compatibilité universelle.",
+    },
+    {
+      q: "Comment fonctionne la facturation et l'observabilité ?",
+      a: "Chaque action de l'agent génère une trace signée. Vous pouvez définir des budgets atomiques par agent et recevoir des alertes Slack ou Gmail en cas de comportement anormal ou de dépassement de coût.",
+    },
+    {
+      q: "Puis-je l'essayer gratuitement avant de m'engager ?",
+      a: "Absolument. Le plan Free vous permet de connecter jusqu'à 2 agents avec un historique d'audit de 7 jours, sans carte de crédit requise.",
+    },
+  ];
+
   const [selectedFaq, setSelectedFaq] = useState<typeof faqs[0] | null>(null);
 
   return (
@@ -77,6 +51,7 @@ export function Faq() {
           {faqs.map((item, index) => (
             <Reveal key={index}>
               <button
+                type="button"
                 onClick={() => setSelectedFaq(item)}
                 className="snap-center shrink-0 w-[280px] md:w-[320px] rounded-sm border border-line-black bg-black/20 p-6 text-left transition-all hover:border-amber hover:bg-black/40 active:scale-[0.98]"
               >
@@ -106,6 +81,7 @@ export function Faq() {
             onClick={(e) => e.stopPropagation()}
           >
             <button
+              type="button"
               onClick={() => setSelectedFaq(null)}
               className="absolute right-4 top-4 text-paper/50 hover:text-amber transition-colors"
               aria-label="Fermer"
@@ -124,6 +100,7 @@ export function Faq() {
             </p>
             
             <button
+              type="button"
               onClick={() => setSelectedFaq(null)}
               className="mt-8 w-full rounded-sm bg-amber py-2.5 font-mono text-sm text-ink font-medium hover:bg-amber-deep transition-colors"
             >
