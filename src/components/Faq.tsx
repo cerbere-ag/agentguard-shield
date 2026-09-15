@@ -1,36 +1,27 @@
-import { useRef, useState } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useState } from "react";
 import { Reveal } from "./Reveal";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
 
 export function Faq() {
-  // Définition des questions à l'intérieur du composant pour éviter les erreurs de portée
   const faqs = [
     {
-      q: "Comment Cerbere AG détecte-t-il les injections de prompt ?",
-      a: "Nous utilisons un moteur à 3 couches : des motifs regex ultra-rapides, un classifieur ML léger et un juge LLM pour les cas ambigus. Tout cela s'exécute en quelques millisecondes avant que le prompt n'atteigne votre modèle.",
+      q: "How does Cerbere AG detect prompt injections?",
+      a: "We use a 3-layer engine: ultra-fast regex patterns, a lightweight ML classifier, and an LLM judge for ambiguous cases. All of this runs in milliseconds before the prompt reaches your model.",
     },
     {
-      q: "Est-ce que mes données quittent mon infrastructure ?",
-      a: "Non. Avec le déploiement local ou self-hosted, toutes les vérifications se font sur votre propre réseau. Aucune donnée sensible n'est envoyée à des serveurs tiers.",
+      q: "Do my data leave my infrastructure?",
+      a: "No. With local or self-hosted deployment, all checks happen on your own network. No sensitive data is ever sent to third-party servers.",
     },
     {
-      q: "Quels frameworks d'agents sont compatibles ?",
-      a: "Notre SDK Python s'intègre nativement avec LangGraph, CrewAI et tout agent utilisant des appels d'outils standard. Nous supportons également MCP pour une compatibilité universelle.",
+      q: "Which agent frameworks are compatible?",
+      a: "Our Python SDK integrates natively with LangGraph, CrewAI, and any agent using standard tool calls. We also support MCP for universal compatibility.",
     },
     {
-      q: "Comment fonctionne la facturation et l'observabilité ?",
-      a: "Chaque action de l'agent génère une trace signée. Vous pouvez définir des budgets atomiques par agent et recevoir des alertes Slack ou Gmail en cas de comportement anormal ou de dépassement de coût.",
+      q: "How do billing and observability work?",
+      a: "Every agent action generates a signed trace. You can set atomic budgets per agent and receive Slack or Gmail alerts for anomalous behavior or cost overruns.",
     },
     {
-      q: "Puis-je l'essayer gratuitement avant de m'engager ?",
-      a: "Absolument. Le plan Free vous permet de connecter jusqu'à 2 agents avec un historique d'audit de 7 jours, sans carte de crédit requise.",
+      q: "Can I try it for free before committing?",
+      a: "Absolutely. The Free plan lets you connect up to 2 agents with a 7-day audit history, no credit card required.",
     },
   ];
 
@@ -42,24 +33,24 @@ export function Faq() {
         <Reveal className="max-w-2xl">
           <span className="eyebrow">faq</span>
           <h2 className="mt-3 text-[clamp(26px,3.4vw,36px)]">
-            Questions fréquentes
+            Frequently Asked Questions
           </h2>
         </Reveal>
 
-        {/* Scroll horizontal */}
-        <div className="mt-10 flex gap-4 overflow-x-auto pb-6 snap-x snap-mandatory scrollbar-hide">
+        {/* Scroll horizontal corrigé */}
+        <div className="mt-10 flex w-full overflow-x-auto gap-4 pb-6 snap-x snap-mandatory scrollbar-hide">
           {faqs.map((item, index) => (
             <Reveal key={index}>
               <button
                 type="button"
                 onClick={() => setSelectedFaq(item)}
-                className="snap-center shrink-0 w-[280px] md:w-[320px] rounded-sm border border-line-black bg-black/20 p-6 text-left transition-all hover:border-amber hover:bg-black/40 active:scale-[0.98]"
+                className="flex-none w-[280px] md:w-[320px] snap-center rounded-sm border border-line-black bg-black/20 p-6 text-left transition-all hover:border-amber hover:bg-black/40 active:scale-[0.98]"
               >
                 <h3 className="font-display text-lg font-medium text-paper">
                   {item.q}
                 </h3>
                 <span className="mt-4 inline-flex items-center gap-1 font-mono text-xs text-amber">
-                  Lire la réponse
+                  Read answer
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <path d="M5 12h14M12 5l7 7-7 7" />
                   </svg>
@@ -84,7 +75,7 @@ export function Faq() {
               type="button"
               onClick={() => setSelectedFaq(null)}
               className="absolute right-4 top-4 text-paper/50 hover:text-amber transition-colors"
-              aria-label="Fermer"
+              aria-label="Close"
             >
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M18 6L6 18M6 6l12 12" />
@@ -104,7 +95,7 @@ export function Faq() {
               onClick={() => setSelectedFaq(null)}
               className="mt-8 w-full rounded-sm bg-amber py-2.5 font-mono text-sm text-ink font-medium hover:bg-amber-deep transition-colors"
             >
-              Fermer
+              Close
             </button>
           </div>
         </div>
