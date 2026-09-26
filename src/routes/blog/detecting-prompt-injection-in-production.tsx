@@ -20,7 +20,30 @@ export const Route = createFileRoute("/blog/detecting-prompt-injection-in-produc
         content: "Detecting prompt injection in production: our first public benchmark",
       },
       { property: "og:type", content: "article" },
+      {
+        property: "og:url",
+        content: "https://www.cerbereag.site/blog/detecting-prompt-injection-in-production",
+      },
+      {
+        property: "og:image",
+        content: "https://www.cerbereag.site/og/detecting-prompt-injection.png",
+      },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
       { name: "twitter:card", content: "summary_large_image" },
+      {
+        name: "twitter:title",
+        content: "Detecting prompt injection in production",
+      },
+      {
+        name: "twitter:description",
+        content:
+          "91.5% recall at sub-ms latency from regex alone, 98.1% with ML added — full benchmark mapped to the OWASP Top 10 for LLM Applications.",
+      },
+      {
+        name: "twitter:image",
+        content: "https://www.cerbereag.site/og/detecting-prompt-injection.png",
+      },
     ],
   }),
   component: Post,
