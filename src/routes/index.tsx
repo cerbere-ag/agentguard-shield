@@ -33,8 +33,7 @@ export const Route = createFileRoute("/")({
 
 const APP = "https://app.cerbereag.site";
 const GITHUB = "https://github.com/chrismsmr-celcom/agentguard";
-// TODO: point this to your real docs site once it exists (README_MCP / a docs.cerbereag.site page).
-const DOCS = "https://github.com/chrismsmr-celcom/agentguard#readme";
+const DOCS = "/docs";
 const MCP_INSTALL_CMD =
   "claude mcp add cerbereag --transport sse https://app.cerbereag.site/mcp/sse";
 
@@ -335,8 +334,6 @@ function Index() {
           <nav className="flex items-center gap-5">
             <a
               href={DOCS}
-              target="_blank"
-              rel="noopener"
               className="hidden font-mono text-sm text-paper/70 transition-colors hover:text-amber sm:block"
             >
               Docs
@@ -875,4 +872,5 @@ function Index() {
     </div>
   );
 }
+
 
