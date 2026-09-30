@@ -37,8 +37,8 @@ const DOCS = "/docs";
 const MCP_INSTALL_CMD =
   "claude mcp add cerbereag --transport sse https://app.cerbereag.site/mcp/sse";
 
-// TODO: replace with your real handles.
-const X_URL = "https://x.com/cerbereag";
+// LinkedIn, YouTube and Instagram are still placeholders — swap in once they exist.
+const X_URL = "https://x.com/CerbereAg";
 const LINKEDIN_URL = "https://www.linkedin.com/company/cerbereag";
 const YOUTUBE_URL = "https://www.youtube.com/@cerbereag";
 const INSTAGRAM_URL = "https://www.instagram.com/cerbereag";
@@ -179,6 +179,24 @@ const runLines: Line[] = [
       c: dim,
     },
   ],
+];
+
+const archNodes: { title: string; items?: string[]; split?: [string, string] }[] = [
+  { title: "AI Agent" },
+  {
+    title: "AgentGuard SDK",
+    items: ["Policy enforcement", "Security checks", "Budget controls", "Tool controls"],
+  },
+  {
+    title: "3-layer detection",
+    items: ["1. Regex / rules", "2. ML classifier", "3. LLM judge"],
+  },
+  { title: "Decision", split: ["Allow", "Block"] },
+  {
+    title: "Collector",
+    items: ["Traces", "Metrics", "Security events", "Cost / usage"],
+  },
+  { title: "Dashboard" },
 ];
 
 const observability = [
@@ -518,6 +536,36 @@ function Index() {
               </Reveal>
             ))}
           </div>
+
+          <Reveal className="mx-auto mt-16 flex max-w-sm flex-col items-center">
+            {archNodes.map((node, i) => (
+              <div key={node.title} className="flex w-full flex-col items-center">
+                <div className="w-full border border-line-black bg-[oklch(0.17_0.004_60)] px-6 py-4 text-center">
+                  <div className="font-mono text-sm font-semibold text-paper">{node.title}</div>
+                  {node.items && (
+                    <ul className="mt-2 space-y-1">
+                      {node.items.map((it) => (
+                        <li key={it} className="text-[12.5px] text-paper/55">
+                          {it}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                  {node.split && (
+                    <div className="mt-2 flex justify-center gap-3 font-mono text-[13px]">
+                      <span className="text-allow">✓ {node.split[0]}</span>
+                      <span className="text-deny">⛔ {node.split[1]}</span>
+                    </div>
+                  )}
+                </div>
+                {i < archNodes.length - 1 && (
+                  <div className="my-1 font-mono text-amber" aria-hidden>
+                    │
+                  </div>
+                )}
+              </div>
+            ))}
+          </Reveal>
         </div>
       </section>
 
@@ -723,52 +771,13 @@ function Index() {
             </a>
           </Reveal>
 
-          <Reveal className="mt-12 border border-line-coal bg-coal p-5 font-mono text-[12.5px] text-paper/70 md:p-7">
-            <div className="mb-5 grid grid-cols-2 gap-px bg-line-black sm:grid-cols-3 md:grid-cols-6">
-              {[
-                { label: "Actions", value: "1,248" },
-                { label: "Blocked", value: "63" },
-                { label: "Flagged", value: "41" },
-                { label: "Risk events", value: "12" },
-                { label: "Tokens / Cost", value: "$4.82" },
-                { label: "Policy violations", value: "5" },
-              ].map(({ label, value }) => (
-                <div key={label} className="bg-coal p-3.5">
-                  <div className="text-[10.5px] uppercase tracking-wider text-paper/40">
-                    {label}
-                  </div>
-                  <div className="mt-1 text-lg font-semibold text-paper">{value}</div>
-                </div>
-              ))}
-            </div>
-
-            <div className="space-y-1.5 border-t border-line-black pt-4">
-              {[
-                { t: "09:41:03", actor: "MODEL", detail: "requested GMAIL_SEND", c: "" },
-                {
-                  t: "09:41:07",
-                  actor: "CERBERE",
-                  detail: "high risk — external data transmission",
-                  c: "text-deny",
-                },
-                { t: "09:41:08", actor: "HUMAN", detail: "approval requested", c: "text-amber" },
-                {
-                  t: "09:41:32",
-                  actor: "TOOL CALL",
-                  detail: "GMAIL_SEND — allowed",
-                  c: "text-allow",
-                },
-              ].map(({ t, actor, detail, c }) => (
-                <div
-                  key={t + actor}
-                  className="flex flex-wrap gap-3 border-t border-line-black/60 pt-1.5 first:border-t-0 first:pt-0"
-                >
-                  <span className="text-paper/40">{t}</span>
-                  <span className="w-[92px] shrink-0 text-paper/85">{actor}</span>
-                  <span className={c || "text-paper/70"}>{detail}</span>
-                </div>
-              ))}
-            </div>
+          <Reveal className="mt-12 overflow-hidden rounded-lg border border-line-coal bg-coal shadow-[0_30px_80px_oklch(0.19_0.008_45/0.35)]">
+            <img
+              src="/collector/collector.png"
+              alt="Cerbere AG collector dashboard: service health, request volume, cost and the daily activity heatmap"
+              className="w-full"
+              loading="lazy"
+            />
           </Reveal>
 
           <div className="mt-12 grid gap-px border border-line-coal bg-line-coal md:grid-cols-3">
@@ -1099,4 +1108,3 @@ function Index() {
     </div>
   );
 }
-
