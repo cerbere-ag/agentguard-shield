@@ -4,6 +4,7 @@ import { Reveal } from "@/components/Reveal";
 import { Terminal, type Line } from "@/components/Terminal";
 import { Integrations } from "@/components/Integrations";
 import { Faq } from "@/components/Faq";
+import { HowItWorks } from "@/components/HowItWorks";
 import logo from "@/assets/cerbere-logo.jpeg";
 
 export const Route = createFileRoute("/")({
@@ -33,15 +34,6 @@ export const Route = createFileRoute("/")({
 
 const APP = "https://app.cerbereag.site";
 const GITHUB = "https://github.com/chrismsmr-celcom/agentguard";
-const DOCS = "/docs";
-const MCP_INSTALL_CMD =
-  "claude mcp add cerbereag --transport sse https://app.cerbereag.site/mcp/sse";
-
-// LinkedIn, YouTube and Instagram are still placeholders — swap in once they exist.
-const X_URL = "https://x.com/CerbereAg";
-const LINKEDIN_URL = "https://www.linkedin.com/company/cerbereag";
-const YOUTUBE_URL = "https://www.youtube.com/@cerbereag";
-const INSTAGRAM_URL = "https://www.instagram.com/cerbereag";
 
 const rotating = [
   "blocks prompt injection before it reaches your tools",
@@ -56,17 +48,29 @@ const deny = "text-deny";
 const amb = "text-amber";
 
 const installLines: Line[] = [
-  [{ t: "$ pip install cerbere-ag" }],
+  [
+    {
+      t: "PS C:\\Users\\USER\\Documents\\cerbere-test> python -m pip install cerbere-ag",
+    },
+  ],
   [{ t: "Successfully installed cerbere-ag-0.1.3", c: dim }],
   [],
-  [{ t: "$ export AGENTGUARD_API_KEY=ag_live_..." }],
-  [{ t: "$ cerbere" }],
-  [{ t: "   🛡️  CERBERE AG IS ACTIVE  🛡️", c: amb }],
-  [{ t: "   The three-headed guardian is watching your agents.", c: dim }],
+  [
+    {
+      t: 'PS C:\\Users\\USER\\Documents\\cerbere-test> $env:AGENTGUARD_API_KEY="ag_live_..."',
+    },
+  ],
+  [{ t: "PS C:\\Users\\USER\\Documents\\cerbere-test> cerbere" }],
+  [{ t: "   🛡️  CERBERE-AG EST ACTIF  🛡️", c: amb }],
+  [{ t: "   Le gardien a trois tetes protege ton systeme.", c: dim }],
 ];
 
 const runLines: Line[] = [
-  [{ t: "$ python agent_demo.py" }],
+  [
+    {
+      t: "PS C:\\Users\\USER\\Documents\\cerbere-test> python agent_demo.py",
+    },
+  ],
   [
     {
       t: '{"strong": 141, "weak": 7, "extended_patterns": 107, "event": "regex_patterns_compiled"}',
@@ -94,52 +98,58 @@ const runLines: Line[] = [
   [],
   [
     {
-      t: "PHASE 1 - Agent's normal work (legitimate tasks)",
+      t: "PHASE 1 - Travail naturel de l'agent (taches legitimes)",
       c: amb,
     },
   ],
   [],
-  [{ t: "[AGENT] ", c: dim }, { t: "search_web({'query': 'meteo Paris demain'})" }],
+  [
+    { t: "[AGENT] ", c: dim },
+    { t: "search_web({'query': 'meteo Paris demain'})" },
+  ],
   [
     { t: "[CERBERE] " },
     { t: "ALLOW", c: allow },
     { t: " -> [resultats simules pour 'meteo Paris demain']" },
   ],
   [],
-  [{ t: "[AGENT] ", c: dim }, { t: "check_calendar({'date': '2026-09-12'})" }],
+  [
+    { t: "[AGENT] ", c: dim },
+    { t: "check_calendar({'date': '2026-09-12'})" },
+  ],
   [
     { t: "[CERBERE] " },
     { t: "ALLOW", c: allow },
-    { t: " -> [free slot on 2026-09-12 at 3:00 PM]" },
+    { t: " -> [creneau libre le 2026-09-12 a 15h]" },
   ],
   [],
   [
     { t: "[AGENT] ", c: dim },
     {
-      t: "write_file({'path': 'daily_recap.txt', 'content': 'Recap: meeting confirmed for 09/12'})",
+      t: "write_file({'path': 'recap_journee.txt', 'content': 'Recap: RDV confirme le 12/09'})",
     },
   ],
   [
     { t: "[CERBERE] " },
     { t: "ALLOW", c: allow },
-    { t: " -> [file 'daily_recap.txt' written, 54 characters]" },
+    { t: " -> [fichier 'recap_journee.txt' ecrit, 54 caracteres]" },
   ],
   [],
   [
     { t: "[AGENT] ", c: dim },
     {
-      t: "send_email({'to': 'colleague@company.com', 'subject': 'Daily recap'})",
+      t: "send_email({'to': 'collegue@entreprise.com', 'subject': 'Recap de la journee'})",
     },
   ],
   [
     { t: "[CERBERE] " },
     { t: "ALLOW", c: allow },
-    { t: " -> [email sent to colleague@company.com]" },
+    { t: " -> [email envoye a collegue@entreprise.com]" },
   ],
   [],
   [
     {
-      t: "PHASE 2 - Malicious action attempt (injection / abuse)",
+      t: "PHASE 2 - Tentative d'action malveillante (injection / abus)",
       c: amb,
     },
   ],
@@ -172,31 +182,13 @@ const runLines: Line[] = [
     },
   ],
   [],
-  [{ t: "DONE", c: amb }],
+  [{ t: "TERMINE", c: amb }],
   [
     {
-      t: "-> Audit Trail: 4 actions allowed, 2 actions blocked.",
+      t: "-> Audit Trail: 4 actions autorisees, 2 actions bloquees.",
       c: dim,
     },
   ],
-];
-
-const archNodes: { title: string; items?: string[]; split?: [string, string] }[] = [
-  { title: "AI Agent" },
-  {
-    title: "AgentGuard SDK",
-    items: ["Policy enforcement", "Security checks", "Budget controls", "Tool controls"],
-  },
-  {
-    title: "3-layer detection",
-    items: ["1. Regex / rules", "2. ML classifier", "3. LLM judge"],
-  },
-  { title: "Decision", split: ["Allow", "Block"] },
-  {
-    title: "Collector",
-    items: ["Traces", "Metrics", "Security events", "Cost / usage"],
-  },
-  { title: "Dashboard" },
 ];
 
 const observability = [
@@ -317,7 +309,10 @@ function Index() {
   const [rot, setRot] = useState(0);
 
   useEffect(() => {
-    const id = setInterval(() => setRot((i) => (i + 1) % rotating.length), 3200);
+    const id = setInterval(
+      () => setRot((i) => (i + 1) % rotating.length),
+      3200,
+    );
     return () => clearInterval(id);
   }, []);
 
@@ -326,7 +321,10 @@ function Index() {
       {/* topbar */}
       <header className="sticky top-0 z-50 border-b border-line-black bg-ink/85 backdrop-blur-md">
         <div className="wrap flex h-[68px] items-center justify-between">
-          <a href="#" className="flex items-center gap-2.5 font-mono text-[17px] font-bold">
+          <a
+            href="#"
+            className="flex items-center gap-2.5 font-mono text-[17px] font-bold"
+          >
             <img
               src={logo}
               alt="Cerbere AG logo"
@@ -339,24 +337,10 @@ function Index() {
 
           <nav className="flex items-center gap-5">
             <a
-              href={DOCS}
-              className="hidden font-mono text-sm text-paper/70 transition-colors hover:text-amber sm:block"
-            >
-              Docs
-            </a>
-
-            <a
               href="#integrations"
               className="hidden font-mono text-sm text-paper/70 transition-colors hover:text-amber sm:block"
             >
               Integrations
-            </a>
-
-            <a
-              href="#benchmark"
-              className="hidden font-mono text-sm text-paper/70 transition-colors hover:text-amber sm:block"
-            >
-              Benchmark
             </a>
 
             <a
@@ -373,7 +357,12 @@ function Index() {
               aria-label="View source on GitHub"
               className="flex size-9 items-center justify-center text-paper/75 transition-opacity hover:text-paper"
             >
-              <svg width="21" height="21" viewBox="0 0 24 24" fill="currentColor">
+              <svg
+                width="21"
+                height="21"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
                 <path d="M12 .5C5.73.5.75 5.48.75 11.75c0 5.02 3.26 9.28 7.77 10.78.57.1.78-.25.78-.55 0-.27-.01-1.17-.02-2.12-3.16.69-3.83-1.34-3.83-1.34-.52-1.31-1.26-1.66-1.26-1.66-1.03-.7.08-.69.08-.69 1.14.08 1.74 1.17 1.74 1.17 1.01 1.73 2.65 1.23 3.3.94.1-.73.4-1.23.72-1.51-2.52-.29-5.17-1.26-5.17-5.6 0-1.24.44-2.25 1.17-3.04-.12-.29-.51-1.45.11-3.02 0 0 .96-.31 3.14 1.16a10.9 10.9 0 0 1 5.72 0c2.18-1.47 3.14-1.16 3.14-1.16.62 1.57.23 2.73.11 3.02.73.79 1.17 1.8 1.17 3.04 0 4.35-2.65 5.31-5.18 5.59.41.35.77 1.05.77 2.12 0 1.53-.01 2.76-.01 3.14 0 .3.2.66.79.55A11.26 11.26 0 0 0 23.25 11.75C23.25 5.48 18.27.5 12 .5Z" />
               </svg>
             </a>
@@ -414,8 +403,8 @@ function Index() {
 
           <Reveal>
             <p className="mt-6 max-w-[46ch] text-[19px] text-paper/70">
-              Runtime security and observability for AI agents. It is the agentic era. Stay in
-              control.
+              Runtime security and observability for AI agents. It is the
+              agentic era. Stay in control.
             </p>
           </Reveal>
 
@@ -439,19 +428,7 @@ function Index() {
                 </a>
               </div>
 
-              <div>
-                <span className="mb-1.5 block font-mono text-[11px] uppercase tracking-wider text-paper/40">
-                  Python SDK
-                </span>
-                <CopyableCode code="pip install cerbere-ag" />
-              </div>
-
-              <div>
-                <span className="mb-1.5 block font-mono text-[11px] uppercase tracking-wider text-paper/40">
-                  MCP · Claude Code, Cursor and other MCP clients
-                </span>
-                <CopyableCode code={MCP_INSTALL_CMD} />
-              </div>
+              <CopyableCode code="pip install cerbere-ag" />
             </div>
           </Reveal>
         </div>
@@ -483,92 +460,6 @@ function Index() {
         </Reveal>
       </section>
 
-      {/* how it works */}
-      <section className="border-t border-line-black bg-ink py-20 md:py-28">
-        <div className="wrap">
-          <Reveal className="max-w-2xl">
-            <span className="eyebrow">how it works</span>
-            <h2 className="mt-3 text-[clamp(26px,3.4vw,36px)]">One decision chain, every time.</h2>
-            <p className="mt-3.5 max-w-[54ch] text-base text-paper/65">
-              Cerbere sits inline on every LLM call and every tool call. Each one walks the same
-              deterministic chain before it is allowed to run — no black-box model grading its own
-              homework.
-            </p>
-          </Reveal>
-
-          <div className="mt-14 grid gap-0 overflow-x-auto md:grid-cols-5">
-            {[
-              [
-                "01",
-                "Agent acts",
-                "Your agent calls a tool or an LLM through the SDK or MCP server.",
-              ],
-              [
-                "02",
-                "Identity & capability",
-                "Cerbere resolves which agent this is and what it is allowed to hold.",
-              ],
-              [
-                "03",
-                "Scope & sensitivity",
-                "The specific arguments are checked against scope and data classification.",
-              ],
-              [
-                "04",
-                "Policy evaluated",
-                "Budget, rate limits and your org's rules are applied to this one call.",
-              ],
-              [
-                "05",
-                "Decision",
-                "Allow, block, or hold for human approval — logged with the full reasoning.",
-              ],
-            ].map(([n, title, body], i) => (
-              <Reveal
-                key={n}
-                className={`min-w-[220px] border-t border-line-black p-6 md:border-l md:border-t-0 ${
-                  i === 0 ? "md:border-l-0" : ""
-                }`}
-              >
-                <span className="font-mono text-[12.5px] text-amber">{n}</span>
-                <h3 className="mb-2 mt-3 text-[17px]">{title}</h3>
-                <p className="text-[13.5px] text-paper/60">{body}</p>
-              </Reveal>
-            ))}
-          </div>
-
-          <Reveal className="mx-auto mt-16 flex max-w-sm flex-col items-center">
-            {archNodes.map((node, i) => (
-              <div key={node.title} className="flex w-full flex-col items-center">
-                <div className="w-full border border-line-black bg-[oklch(0.17_0.004_60)] px-6 py-4 text-center">
-                  <div className="font-mono text-sm font-semibold text-paper">{node.title}</div>
-                  {node.items && (
-                    <ul className="mt-2 space-y-1">
-                      {node.items.map((it) => (
-                        <li key={it} className="text-[12.5px] text-paper/55">
-                          {it}
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                  {node.split && (
-                    <div className="mt-2 flex justify-center gap-3 font-mono text-[13px]">
-                      <span className="text-allow">✓ {node.split[0]}</span>
-                      <span className="text-deny">⛔ {node.split[1]}</span>
-                    </div>
-                  )}
-                </div>
-                {i < archNodes.length - 1 && (
-                  <div className="my-1 font-mono text-amber" aria-hidden>
-                    │
-                  </div>
-                )}
-              </div>
-            ))}
-          </Reveal>
-        </div>
-      </section>
-
       {/* Integrations section - moved up */}
       <Integrations />
 
@@ -589,141 +480,44 @@ function Index() {
             </Reveal>
 
             <Reveal>
-              <Terminal title="security decisions" lines={runLines} height="min-h-[340px]" />
+              <Terminal
+                title="security decisions"
+                lines={runLines}
+                height="min-h-[340px]"
+              />
             </Reveal>
           </div>
         </div>
       </section>
 
-      {/* benchmark */}
-      <section
-        id="benchmark"
-        className="border-t border-line-black bg-cream py-20 text-coal md:py-28"
-      >
-        <div className="wrap">
-          <Reveal className="max-w-2xl">
-            <span className="eyebrow">benchmark</span>
-            <h2 className="mt-3 text-[clamp(26px,3.4vw,36px)]">
-              Measured against a public prompt injection set.
-            </h2>
-            <p className="mt-3.5 max-w-[54ch] text-base text-coal/70">
-              We ran our detection pipeline against a public benchmark and published the full
-              methodology, strengths and weaknesses — including where it still misses.
-            </p>
-          </Reveal>
+      {/* how it works */}
+      <HowItWorks />
 
-          <div className="mt-12 grid gap-px border border-line-cream bg-line-cream sm:grid-cols-2 lg:grid-cols-4">
-            {[
-              { tag: "regex layer", value: "91.5%", detail: "recall, 0% false positives" },
-              { tag: "regex + ML", value: "98.1%", detail: "recall" },
-              {
-                tag: "ML layer",
-                value: "5% / 33%",
-                detail: "false positives — benign / hard negatives",
-              },
-              { tag: "ML layer", value: "~450ms", detail: "p95 latency" },
-            ].map(({ tag, value, detail }) => (
-              <Reveal key={tag + value} className="bg-cream p-7">
-                <span className="font-mono text-[12px] font-semibold text-amber-deep">{tag}</span>
-                <div className="mt-3 font-display text-[30px] leading-none">{value}</div>
-                <p className="mt-2 text-[13.5px] text-coal/65">{detail}</p>
-              </Reveal>
-            ))}
-          </div>
-
-          <Reveal className="mt-8">
-            <a
-              href="/blog/detecting-prompt-injection-in-production"
-              className="inline-flex items-center gap-2 font-mono text-sm text-amber-deep transition-colors hover:text-coal"
-            >
-              Read the full benchmark write-up
-              <span aria-hidden>→</span>
-            </a>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* research */}
-      <section
-        id="research"
-        className="border-t border-line-black bg-ink py-20 text-paper md:py-28"
-      >
-        <div className="wrap">
-          <Reveal className="max-w-2xl">
-            <span className="eyebrow">research</span>
-            <h2 className="mt-3 text-[clamp(26px,3.4vw,36px)]">
-              Built on a moving field, not a fixed list.
-            </h2>
-            <p className="mt-3.5 max-w-[56ch] text-base text-paper/65">
-              Agent security research moves fast. Here is what we track, and where our own benchmark
-              fits into it.
-            </p>
-          </Reveal>
-
-          <div className="mt-12 grid gap-10 md:grid-cols-2 md:gap-16">
-            <Reveal className="border-l border-line-black pl-6">
-              <span className="mb-2.5 block font-mono text-sm text-amber">
-                OWASP GenAI Security Project
-              </span>
-              <h3 className="mb-3 text-xl">Top 10 for LLM Applications, 2026 edition</h3>
-              <p className="max-w-[42ch] text-[15.5px] text-paper/65">
-                Prompt injection holds the No. 1 spot again, and excessive agency jumped from 6th to
-                3rd — the biggest move in this year's ranking. Our policy chain (identity,
-                capability, scope, then decision) targets that shift directly: excessive agency is a
-                permissions problem, not just a detection problem.
-              </p>
-            </Reveal>
-
-            <Reveal className="border-l border-line-black pl-6">
-              <span className="mb-2.5 block font-mono text-sm text-amber">
-                Academic benchmarks (InjecAgent, StruQ)
-              </span>
-              <h3 className="mb-3 text-xl">Standalone prompting defenses stay brittle</h3>
-              <p className="max-w-[42ch] text-[15.5px] text-paper/65">
-                Tool-integrated agents remain exploitable even under strong system prompts, and
-                combined attacks raise success rates further. It's why we don't rely on prompting
-                the model to behave — every call is checked by a layer the agent cannot talk its way
-                around.
-              </p>
-            </Reveal>
-          </div>
-
-          <Reveal className="mt-10">
-            <a
-              href="/blog/detecting-prompt-injection-in-production"
-              className="inline-flex items-center gap-2 font-mono text-sm text-amber transition-colors hover:text-paper"
-            >
-              Where our benchmark fits in
-              <span aria-hidden>→</span>
-            </a>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* Mission */}
+      {/* Philosophy/Context Section */}
       <section className="bg-ink py-20 text-paper md:py-28">
         <div className="wrap">
           <Reveal>
-            <span className="eyebrow">mission</span>
-          </Reveal>
-
-          <Reveal>
-            <p className="mt-3 max-w-[30ch] font-display text-[clamp(22px,2.6vw,29px)] font-medium leading-[1.32]">
-              The internet's early years taught us that an open, unguarded system gets exploited.
-              Agentic AI is repeating that lesson, faster.
+            <p className="max-w-[30ch] font-display text-[clamp(22px,2.6vw,29px)] font-medium leading-[1.32]">
+              The internet's early years taught us that an open, unguarded
+              system gets exploited. Agentic AI is repeating that lesson,
+              faster.
             </p>
           </Reveal>
 
           <div className="mt-14 grid gap-10 md:grid-cols-2 md:gap-16">
             <Reveal className="border-l border-line-black pl-6">
-              <span className="mb-2.5 block font-mono text-sm text-amber">1995 - the open web</span>
+              <span className="mb-2.5 block font-mono text-sm text-amber">
+                1995 - the open web
+              </span>
 
-              <h3 className="mb-3 text-xl">Every new connection was a new exposure.</h3>
+              <h3 className="mb-3 text-xl">
+                Every new connection was a new exposure.
+              </h3>
 
               <p className="max-w-[40ch] text-[15.5px] text-paper/65">
-                As homes and offices came online, viruses, worms and bad actors found an unguarded
-                surface. It took firewalls, antivirus and years of hard lessons before connected
-                stopped meaning exposed.
+                As homes and offices came online, viruses, worms and bad actors
+                found an unguarded surface. It took firewalls, antivirus and
+                years of hard lessons before connected stopped meaning exposed.
               </p>
             </Reveal>
 
@@ -732,12 +526,15 @@ function Index() {
                 2026 - the agentic era
               </span>
 
-              <h3 className="mb-3 text-xl">Every new agent is a new attack surface.</h3>
+              <h3 className="mb-3 text-xl">
+                Every new agent is a new attack surface.
+              </h3>
 
               <p className="max-w-[40ch] text-[15.5px] text-paper/65">
-                An agent that can read, decide and act can also be hijacked by a poisoned document,
-                a malicious tool response or an injected instruction. Without a layer that checks
-                intent before execution, autonomy becomes risk.
+                An agent that can read, decide and act can also be hijacked by a
+                poisoned document, a malicious tool response or an injected
+                instruction. Without a layer that checks intent before
+                execution, autonomy becomes risk.
               </p>
             </Reveal>
           </div>
@@ -755,29 +552,9 @@ function Index() {
             </h2>
 
             <p className="mt-3.5 max-w-[52ch] text-base text-coal/70">
-              Security means nothing without observability. The dashboard below is one tool in the
-              Cerbere package — the SDK and policy engine work standalone too, but this is what you
-              get once a collector is running.
+              Security means nothing without observability. See every trace,
+              every decision, and understand your agents end to end.
             </p>
-
-            <a
-              href={APP}
-              target="_blank"
-              rel="noopener"
-              className="mt-6 inline-flex items-center gap-2 rounded-sm bg-coal px-4.5 py-2.5 font-mono text-sm text-amber transition-colors hover:bg-coal/85"
-            >
-              Try the Collector
-              <span aria-hidden>→</span>
-            </a>
-          </Reveal>
-
-          <Reveal className="mt-12 overflow-hidden rounded-lg border border-line-coal bg-coal shadow-[0_30px_80px_oklch(0.19_0.008_45/0.35)]">
-            <img
-              src="/collector/collector.png"
-              alt="Cerbere AG collector dashboard: service health, request volume, cost and the daily activity heatmap"
-              className="w-full"
-              loading="lazy"
-            />
           </Reveal>
 
           <div className="mt-12 grid gap-px border border-line-coal bg-line-coal md:grid-cols-3">
@@ -787,7 +564,9 @@ function Index() {
                   {item.tag}
                 </span>
 
-                <h3 className="mb-3 mt-3.5 text-xl text-coal">{item.title}</h3>
+                <h3 className="mb-3 mt-3.5 text-xl text-coal">
+                  {item.title}
+                </h3>
 
                 <p className="text-[15px] text-coal/75">{item.body}</p>
               </Reveal>
@@ -826,7 +605,9 @@ function Index() {
               ],
             ].map(([tag, title, body]) => (
               <Reveal key={tag} className="bg-cream p-8">
-                <span className="font-mono text-[12.5px] font-semibold text-amber-deep">{tag}</span>
+                <span className="font-mono text-[12.5px] font-semibold text-amber-deep">
+                  {tag}
+                </span>
 
                 <h3 className="mb-3 mt-3.5 text-xl">{title}</h3>
 
@@ -853,19 +634,27 @@ function Index() {
               <Reveal
                 key={p.name}
                 className={`flex flex-col p-7 ${
-                  p.featured ? "border-t-2 border-amber bg-[oklch(0.17_0.004_60)]" : "bg-ink"
+                  p.featured
+                    ? "border-t-2 border-amber bg-[oklch(0.17_0.004_60)]"
+                    : "bg-ink"
                 }`}
               >
-                <div className="font-mono text-sm font-semibold">{p.name}</div>
+                <div className="font-mono text-sm font-semibold">
+                  {p.name}
+                </div>
 
-                <div className="mt-1.5 min-h-8 text-[12.5px] text-paper/45">{p.tag}</div>
+                <div className="mt-1.5 min-h-8 text-[12.5px] text-paper/45">
+                  {p.tag}
+                </div>
 
                 <div className="mt-5 font-display text-[34px]">
                   {p.price === "Custom" ? (
                     <span className="text-2xl">Custom</span>
                   ) : (
                     <>
-                      <sup className="mr-0.5 text-[15px] font-medium opacity-60">$</sup>
+                      <sup className="mr-0.5 text-[15px] font-medium opacity-60">
+                        $
+                      </sup>
 
                       {p.price}
 
@@ -880,8 +669,13 @@ function Index() {
 
                 <ul className="mt-6 flex flex-1 flex-col gap-2.5">
                   {p.features.map((f) => (
-                    <li key={f} className="relative pl-4 text-[13.5px] text-paper/75">
-                      <span className="absolute left-0 font-bold text-amber">·</span>
+                    <li
+                      key={f}
+                      className="relative pl-4 text-[13.5px] text-paper/75"
+                    >
+                      <span className="absolute left-0 font-bold text-amber">
+                        ·
+                      </span>
                       {f}
                     </li>
                   ))}
@@ -948,159 +742,67 @@ function Index() {
       <footer className="bg-amber text-coal">
         <div className="px-5 pb-10 pt-20 text-center">
           <div className="relative mx-auto mb-2 size-[220px] overflow-hidden shadow-[0_20px_50px_oklch(0.19_0.008_45/0.28)]">
-            <img src={logo} alt="Cerbere AG guardian logo" className="size-full object-cover" />
+            <img
+           src={logo}
+            alt="Cerbere AG guardian logo"
+           className="size-full object-cover"
+        />
 
             <div className="animate-logo-scan pointer-events-none absolute inset-x-0 h-[34%] bg-gradient-to-b from-transparent via-white/55 to-transparent" />
           </div>
 
           <div className="mt-1.5 font-mono text-[15px] font-bold tracking-wide">
             CERBERE AG
+
             <span className="mt-0.5 block text-[11px] font-medium tracking-[0.14em] opacity-65">
               runtime security and observability for AI agents
             </span>
           </div>
-
-          <div className="mt-6 flex items-center justify-center gap-4">
-            <a
-              href={X_URL}
-              target="_blank"
-              rel="noopener"
-              aria-label="Cerbere AG on X"
-              className="flex size-9 items-center justify-center text-coal/70 transition-colors hover:text-coal"
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M18.9 2.25h3.19l-6.97 7.97L23.4 21.75h-6.42l-5.03-6.58-5.75 6.58H2.99l7.46-8.53L1.6 2.25h6.58l4.55 6.02 6.17-6.02Zm-1.12 17.5h1.77L7.3 4.15H5.4l12.38 15.6Z" />
-              </svg>
-            </a>
-
-            <a
-              href={LINKEDIN_URL}
-              target="_blank"
-              rel="noopener"
-              aria-label="Cerbere AG on LinkedIn"
-              className="flex size-9 items-center justify-center text-coal/70 transition-colors hover:text-coal"
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.03-1.85-3.03-1.85 0-2.14 1.45-2.14 2.94v5.66H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29ZM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12ZM7.12 20.45H3.56V9h3.56v11.45Z" />
-              </svg>
-            </a>
-
-            <a
-              href={YOUTUBE_URL}
-              target="_blank"
-              rel="noopener"
-              aria-label="Cerbere AG on YouTube"
-              className="flex size-9 items-center justify-center text-coal/70 transition-colors hover:text-coal"
-            >
-              <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.38.55A3.02 3.02 0 0 0 .5 6.19 31.6 31.6 0 0 0 0 12a31.6 31.6 0 0 0 .5 5.81 3.02 3.02 0 0 0 2.12 2.14C4.5 20.5 12 20.5 12 20.5s7.5 0 9.38-.55a3.02 3.02 0 0 0 2.12-2.14A31.6 31.6 0 0 0 24 12a31.6 31.6 0 0 0-.5-5.81ZM9.6 15.6V8.4l6.27 3.6-6.27 3.6Z" />
-              </svg>
-            </a>
-
-            <a
-              href={INSTAGRAM_URL}
-              target="_blank"
-              rel="noopener"
-              aria-label="Cerbere AG on Instagram"
-              className="flex size-9 items-center justify-center text-coal/70 transition-colors hover:text-coal"
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.55.22.95.47 1.37.89.42.42.67.82.89 1.37.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.55-.47.95-.89 1.37-.42.42-.82.67-1.37.89-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.37-.89 3.7 3.7 0 0 1-.89-1.37c-.16-.42-.36-1.06-.41-2.23-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.55.47-.95.89-1.37.42-.42.82-.67 1.37-.89.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16Zm0 1.62c-3.14 0-3.5.01-4.74.07-.96.04-1.48.2-1.83.34-.46.18-.79.39-1.13.74-.35.34-.56.67-.74 1.13-.14.35-.3.87-.34 1.83-.06 1.24-.07 1.6-.07 4.74s.01 3.5.07 4.74c.04.96.2 1.48.34 1.83.18.46.39.79.74 1.13.34.35.67.56 1.13.74.35.14.87.3 1.83.34 1.24.06 1.6.07 4.74.07s3.5-.01 4.74-.07c.96-.04 1.48-.2 1.83-.34.46-.18.79-.39 1.13-.74.35-.34.56-.67.74-1.13.14-.35.3-.87.34-1.83.06-1.24.07-1.6.07-4.74s-.01-3.5-.07-4.74c-.04-.96-.2-1.48-.34-1.83a3 3 0 0 0-.74-1.13 3 3 0 0 0-1.13-.74c-.35-.14-.87-.3-1.83-.34C15.5 3.79 15.14 3.78 12 3.78Zm0 3.68a4.54 4.54 0 1 1 0 9.08 4.54 4.54 0 0 1 0-9.08Zm0 1.62a2.92 2.92 0 1 0 0 5.84 2.92 2.92 0 0 0 0-5.84Zm4.72-1.8a1.06 1.06 0 1 1 0 2.12 1.06 1.06 0 0 1 0-2.12Z" />
-              </svg>
-            </a>
-          </div>
         </div>
 
         <div className="border-t border-coal/20">
-          <div className="wrap grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-4">
-            <div>
-              <div className="mb-3 font-mono text-[11px] uppercase tracking-wider opacity-50">
-                Product
-              </div>
-              <div className="flex flex-col gap-2 font-mono text-[13px]">
-                <a href={DOCS} className="opacity-75 hover:opacity-100">
-                  Documentation
-                </a>
-                <a href={`${APP}/login`} className="opacity-75 hover:opacity-100">
-                  Dashboard
-                </a>
-                <a href="#pricing" className="opacity-75 hover:opacity-100">
-                  Pricing
-                </a>
-                <a href="#integrations" className="opacity-75 hover:opacity-100">
-                  Integrations
-                </a>
-              </div>
+          <div className="wrap flex flex-wrap items-center justify-between gap-3.5 py-5">
+            <div className="flex flex-wrap gap-5 font-mono text-[13px]">
+              <a
+                href={GITHUB}
+                target="_blank"
+                rel="noopener"
+                className="opacity-75 hover:opacity-100"
+              >
+                GitHub
+              </a>
+
+              <a
+                href={`${APP}/login`}
+                className="opacity-75 hover:opacity-100"
+              >
+                Dashboard
+              </a>
+
+              <a
+                href={`${APP}/terms`}
+                className="opacity-75 hover:opacity-100"
+              >
+                Terms
+              </a>
+
+              <a
+                href={`${APP}/privacy`}
+                className="opacity-75 hover:opacity-100"
+              >
+                Privacy
+              </a>
+
+              <a
+                href="mailto:christopher-ag@cerbereag.site"
+                className="opacity-75 hover:opacity-100"
+              >
+                Contact
+              </a>
             </div>
 
-            <div>
-              <div className="mb-3 font-mono text-[11px] uppercase tracking-wider opacity-50">
-                Resources
-              </div>
-              <div className="flex flex-col gap-2 font-mono text-[13px]">
-                <a href="/blog" className="opacity-75 hover:opacity-100">
-                  Blog
-                </a>
-                <a href="#benchmark" className="opacity-75 hover:opacity-100">
-                  Benchmark
-                </a>
-                <a href="#research" className="opacity-75 hover:opacity-100">
-                  Research
-                </a>
-                <a
-                  href={GITHUB}
-                  target="_blank"
-                  rel="noopener"
-                  className="opacity-75 hover:opacity-100"
-                >
-                  GitHub
-                </a>
-              </div>
-            </div>
-
-            <div>
-              <div className="mb-3 font-mono text-[11px] uppercase tracking-wider opacity-50">
-                Company
-              </div>
-              <div className="flex flex-col gap-2 font-mono text-[13px]">
-                <a
-                  href="mailto:christopher-ag@cerbereag.site"
-                  className="opacity-75 hover:opacity-100"
-                >
-                  Contact
-                </a>
-                <a
-                  href="https://wa.me/243854442103"
-                  target="_blank"
-                  rel="noopener"
-                  className="opacity-75 hover:opacity-100"
-                >
-                  WhatsApp
-                </a>
-              </div>
-            </div>
-
-            <div>
-              <div className="mb-3 font-mono text-[11px] uppercase tracking-wider opacity-50">
-                Legal
-              </div>
-              <div className="flex flex-col gap-2 font-mono text-[13px]">
-                <a href={`${APP}/terms`} className="opacity-75 hover:opacity-100">
-                  Terms
-                </a>
-                <a href={`${APP}/privacy`} className="opacity-75 hover:opacity-100">
-                  Privacy
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <div className="wrap flex flex-wrap items-center justify-between gap-3.5 border-t border-coal/20 py-5">
             <div className="font-mono text-[12.5px] opacity-65">
               © 2026 Cerbere AG. All rights reserved.
-            </div>
-            <div className="font-mono text-[12.5px] opacity-50">
-              Runtime security and observability for AI agents
             </div>
           </div>
         </div>

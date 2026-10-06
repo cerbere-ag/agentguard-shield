@@ -23,22 +23,6 @@ export function Faq() {
       q: "Can I try it for free before committing?",
       a: "Absolutely. The Free plan lets you connect up to 2 agents with a 7-day audit history, no credit card required.",
     },
-    {
-      q: "Does Cerbere AG add noticeable latency?",
-      a: "Regex and policy checks run in milliseconds. The LLM judge only fires on ambiguous cases, and you can route it to a cheaper or faster model to keep latency low.",
-    },
-    {
-      q: "Can I use Cerbere AG through MCP?",
-      a: "Yes. Cerbere AG ships an MCP server, so Claude Code, Cursor and other MCP clients can connect and get the same protection as the Python SDK.",
-    },
-    {
-      q: "What happens when an action is blocked?",
-      a: "The action never reaches your tool. Cerbere AG returns a signed decision with the reason, and it appears immediately in your audit trail and alerts.",
-    },
-    {
-      q: "How do I uninstall or turn it off?",
-      a: "Remove the SDK wrapper or MCP connection from your agent's config. Cerbere AG has no persistent hooks in your systems once it's removed.",
-    },
   ];
 
   const [selectedFaq, setSelectedFaq] = useState<typeof faqs[0] | null>(null);
@@ -53,62 +37,29 @@ export function Faq() {
           </h2>
         </Reveal>
 
-        {/* Défilement automatique, en pause au survol */}
-        <Reveal>
-          <div className="relative mt-10 overflow-hidden">
-            <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-ink to-transparent" />
-            <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-ink to-transparent" />
-
-            <div className="faq-marquee flex w-max gap-4 pb-6">
-              {[...faqs, ...faqs].map((item, index) => (
-                <button
-                  key={index}
-                  type="button"
-                  onClick={() => setSelectedFaq(item)}
-                  className="flex-none w-[280px] md:w-[320px] rounded-sm border border-line-black bg-black/20 p-6 text-left transition-all hover:border-amber hover:bg-black/40 active:scale-[0.98]"
-                >
-                  <h3 className="font-display text-lg font-medium text-paper">
-                    {item.q}
-                  </h3>
-                  <span className="mt-4 inline-flex items-center gap-1 font-mono text-xs text-amber">
-                    Read answer
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <path d="M5 12h14M12 5l7 7-7 7" />
-                    </svg>
-                  </span>
-                </button>
-              ))}
-            </div>
-          </div>
-        </Reveal>
+        {/* Scroll horizontal corrigé */}
+        <div className="mt-10 flex w-full overflow-x-auto gap-4 pb-6 snap-x snap-mandatory scrollbar-hide">
+          {faqs.map((item, index) => (
+            <Reveal key={index}>
+              <button
+                type="button"
+                onClick={() => setSelectedFaq(item)}
+                className="flex-none w-[280px] md:w-[320px] snap-center rounded-sm border border-line-black bg-black/20 p-6 text-left transition-all hover:border-amber hover:bg-black/40 active:scale-[0.98]"
+              >
+                <h3 className="font-display text-lg font-medium text-paper">
+                  {item.q}
+                </h3>
+                <span className="mt-4 inline-flex items-center gap-1 font-mono text-xs text-amber">
+                  Read answer
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </span>
+              </button>
+            </Reveal>
+          ))}
+        </div>
       </div>
-
-      <style>{`
-        .faq-marquee {
-          animation: faq-scroll 48s linear infinite;
-        }
-
-        .faq-marquee:hover {
-          animation-play-state: paused;
-        }
-
-        @keyframes faq-scroll {
-          from {
-            transform: translateX(0);
-          }
-
-          to {
-            transform: translateX(calc(-50% - 8px));
-          }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-          .faq-marquee {
-            animation: none;
-            overflow-x: auto;
-          }
-        }
-      `}</style>
 
       {/* Modale */}
       {selectedFaq && (
@@ -152,4 +103,3 @@ export function Faq() {
     </section>
   );
 }
-
