@@ -490,6 +490,9 @@ function Index() {
         </div>
       </section>
 
+      {/* how it works */}
+      <HowItWorks />
+
       {/* Philosophy/Context Section */}
       <section className="bg-ink py-20 text-paper md:py-28">
         <div className="wrap">
