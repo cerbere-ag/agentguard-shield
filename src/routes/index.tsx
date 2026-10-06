@@ -372,7 +372,8 @@ function Index() {
       </header>
 
       {/* hero */}
-      <section className="wrap grid items-center gap-14 py-20 md:py-24 lg:grid-cols-[1.15fr_.85fr]">
+      <section className="wrap relative isolate grid items-center gap-14 py-20 md:py-24 lg:grid-cols-[1.15fr_.85fr]">
+        <div className="hero-bg" aria-hidden="true" />
         <div>
           <Reveal>
             <h1 className="text-[clamp(34px,5vw,58px)] leading-[1.08]">
