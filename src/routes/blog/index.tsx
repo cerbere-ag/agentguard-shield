@@ -58,7 +58,7 @@ function BlogIndex() {
           {posts.map((p) => (
             <Reveal key={p.slug}>
               <Link
-                to={`/blog/${p.slug}`}
+                to={`/blog/${p.slug}` as "/blog"}
                 className="group block border border-line-black p-7 transition-colors hover:border-amber md:p-9"
               >
                 <div className="flex items-center gap-3 font-mono text-xs text-paper/45">
