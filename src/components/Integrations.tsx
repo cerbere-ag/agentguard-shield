@@ -118,7 +118,7 @@ export function Integrations() {
           <span className="eyebrow">integrations</span>
 
           <h2 className="mt-3 text-[clamp(26px,3.4vw,36px)]">
-            AgentGuard plugs into the stack you already run.
+            Cerbere AG plugs into the stack you already run.
           </h2>
 
           <p className="mt-3.5 max-w-[52ch] text-base text-paper/65">
@@ -160,4 +160,5 @@ export function Integrations() {
     </section>
   );
 }
+
 
