@@ -253,3 +253,13 @@
     display: none;
   }
 }
+
+@keyframes flow-x { 0% { left: -6px; opacity: 0; } 15%, 85% { opacity: 1; } 100% { left: calc(100% + 2px); opacity: 0; } }
+@keyframes flow-x-reverse { 0% { left: calc(100% + 2px); opacity: 0; } 15%, 85% { opacity: 1; } 100% { left: -6px; opacity: 0; } }
+@keyframes flow-y { 0% { top: -6px; opacity: 0; } 15%, 85% { opacity: 1; } 100% { top: calc(100% + 2px); opacity: 0; } }
+.flow-anim-x { animation: flow-x 2.8s linear infinite; }
+.flow-anim-x.flow-reverse { animation-name: flow-x-reverse; }
+.flow-anim-y { animation: flow-y 2.8s linear infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .flow-anim-x, .flow-anim-x.flow-reverse, .flow-anim-y { animation: none; opacity: 0; }
+}
