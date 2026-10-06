@@ -166,55 +166,37 @@ function Flow({ dir, delay }: { dir: "x" | "y" | "x-left"; delay: number }) {
 
 export function HowItWorks() {
   return (
-    <section className="bg-ink py-20 text-paper md:py-28">
-      <div className="wrap">
-        <Reveal className="max-w-2xl">
-          <span className="eyebrow">how it works</span>
-
-          <h2 className="mt-3 text-[clamp(26px,3.4vw,36px)]">
-            One layer between your agent and the world.
-          </h2>
-
-          <p className="mt-3.5 max-w-[52ch] text-base text-paper/65">
-            Every tool call passes through the same pipeline: it is checked,
-            decided, and recorded before it can do anything.
-          </p>
-        </Reveal>
-
-        <Reveal className="mt-14">
-          {/* mobile: vertical pipeline */}
-          <div className="flex max-w-sm flex-col items-stretch md:hidden">
-            {stages.map((stage, i) => (
-              <div key={stage.n} className="flex flex-col">
-                <StageCard stage={stage} />
-
-                {i < stages.length - 1 && <Flow dir="y" delay={i * 0.45} />}
-              </div>
-            ))}
+    <Reveal className="mt-16">
+      {/* mobile: vertical pipeline */}
+      <div className="mx-auto flex max-w-sm flex-col items-stretch md:hidden">
+        {stages.map((stage, i) => (
+          <div key={stage.n} className="flex flex-col">
+            <StageCard stage={stage} />
+            {i < stages.length - 1 && <Flow dir="y" delay={i * 0.45} />}
           </div>
-
-          {/* desktop: snake layout, 3 across */}
-          <div className="hidden md:grid md:grid-cols-[1fr_2.5rem_1fr_2.5rem_1fr]">
-            <StageCard stage={stages[0]!} />
-            <Flow dir="x" delay={0} />
-            <StageCard stage={stages[1]!} />
-            <Flow dir="x" delay={0.45} />
-            <StageCard stage={stages[2]!} />
-
-            <div className="col-start-5">
-              <Flow dir="y" delay={0.9} />
-            </div>
-
-            <div className="col-span-5 flex flex-row-reverse">
-              <StageCard stage={stages[3]!} />
-              <Flow dir="x-left" delay={1.35} />
-              <StageCard stage={stages[4]!} />
-              <Flow dir="x-left" delay={1.8} />
-              <StageCard stage={stages[5]!} />
-            </div>
-          </div>
-        </Reveal>
+        ))}
       </div>
-    </section>
+
+      {/* desktop: snake layout, 3 across */}
+      <div className="hidden md:grid md:grid-cols-[1fr_2.5rem_1fr_2.5rem_1fr]">
+        <StageCard stage={stages[0]!} />
+        <Flow dir="x" delay={0} />
+        <StageCard stage={stages[1]!} />
+        <Flow dir="x" delay={0.45} />
+        <StageCard stage={stages[2]!} />
+
+        <div className="col-start-5">
+          <Flow dir="y" delay={0.9} />
+        </div>
+
+        <div className="col-span-5 flex flex-row-reverse">
+          <StageCard stage={stages[3]!} />
+          <Flow dir="x-left" delay={1.35} />
+          <StageCard stage={stages[4]!} />
+          <Flow dir="x-left" delay={1.8} />
+          <StageCard stage={stages[5]!} />
+        </div>
+      </div>
+    </Reveal>
   );
 }

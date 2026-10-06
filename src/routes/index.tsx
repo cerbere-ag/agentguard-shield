@@ -4,6 +4,7 @@ import { Reveal } from "@/components/Reveal";
 import { Terminal, type Line } from "@/components/Terminal";
 import { Integrations } from "@/components/Integrations";
 import { Faq } from "@/components/Faq";
+import { HowItWorks } from "@/components/HowItWorks";
 import logo from "@/assets/cerbere-logo.jpeg";
 
 export const Route = createFileRoute("/")({
@@ -179,24 +180,6 @@ const runLines: Line[] = [
       c: dim,
     },
   ],
-];
-
-const archNodes: { title: string; items?: string[]; split?: [string, string] }[] = [
-  { title: "AI Agent" },
-  {
-    title: "AgentGuard SDK",
-    items: ["Policy enforcement", "Security checks", "Budget controls", "Tool controls"],
-  },
-  {
-    title: "3-layer detection",
-    items: ["1. Regex / rules", "2. ML classifier", "3. LLM judge"],
-  },
-  { title: "Decision", split: ["Allow", "Block"] },
-  {
-    title: "Collector",
-    items: ["Traces", "Metrics", "Security events", "Cost / usage"],
-  },
-  { title: "Dashboard" },
 ];
 
 const observability = [
@@ -537,35 +520,7 @@ function Index() {
             ))}
           </div>
 
-          <Reveal className="mx-auto mt-16 flex max-w-sm flex-col items-center">
-            {archNodes.map((node, i) => (
-              <div key={node.title} className="flex w-full flex-col items-center">
-                <div className="w-full border border-line-black bg-[oklch(0.17_0.004_60)] px-6 py-4 text-center">
-                  <div className="font-mono text-sm font-semibold text-paper">{node.title}</div>
-                  {node.items && (
-                    <ul className="mt-2 space-y-1">
-                      {node.items.map((it) => (
-                        <li key={it} className="text-[12.5px] text-paper/55">
-                          {it}
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                  {node.split && (
-                    <div className="mt-2 flex justify-center gap-3 font-mono text-[13px]">
-                      <span className="text-allow">✓ {node.split[0]}</span>
-                      <span className="text-deny">⛔ {node.split[1]}</span>
-                    </div>
-                  )}
-                </div>
-                {i < archNodes.length - 1 && (
-                  <div className="my-1 font-mono text-amber" aria-hidden>
-                    │
-                  </div>
-                )}
-              </div>
-            ))}
-          </Reveal>
+          <HowItWorks />
         </div>
       </section>
 
