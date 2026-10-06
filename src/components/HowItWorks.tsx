@@ -58,7 +58,7 @@ const icons = {
 };
 
 const stages: Stage[] = [
-  { n: "01", title: "AI Agent", icon: icons.cpu },
+  { n: "01", title: "AI Agent", icon: icons.cpu, items: ["Any framework", "Any LLM provider"] },
   {
     n: "02",
     title: "AgentGuard SDK",
@@ -78,7 +78,7 @@ const stages: Stage[] = [
     icon: icons.db,
     items: ["Traces", "Metrics", "Security events", "Cost / usage"],
   },
-  { n: "06", title: "Dashboard", icon: icons.monitor },
+  { n: "06", title: "Dashboard", icon: icons.monitor, items: ["Audit trail", "Alerts and analytics"] },
 ];
 
 function StageCard({ stage }: { stage: Stage }) {
