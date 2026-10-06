@@ -263,3 +263,28 @@
 @media (prefers-reduced-motion: reduce) {
   .flow-anim-x, .flow-anim-x.flow-reverse, .flow-anim-y { animation: none; opacity: 0; }
 }
+
+/* subtle animated hero backdrop */
+.hero-bg {
+  position: absolute;
+  inset: -2rem -50vw;
+  pointer-events: none;
+  z-index: -1;
+  background-image:
+    radial-gradient(42rem 26rem at 22% 18%, color-mix(in oklab, var(--amber) 7%, transparent), transparent 70%),
+    radial-gradient(36rem 24rem at 82% 78%, color-mix(in oklab, var(--amber) 5%, transparent), transparent 70%),
+    linear-gradient(color-mix(in oklab, var(--paper) 4%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in oklab, var(--paper) 4%, transparent) 1px, transparent 1px);
+  background-size: auto, auto, 56px 56px, 56px 56px;
+  animation: hero-drift 26s ease-in-out infinite alternate;
+  mask-image: radial-gradient(75% 90% at 50% 40%, black 55%, transparent 100%);
+}
+
+@keyframes hero-drift {
+  0% { background-position: 0 0, 0 0, 0 0, 0 0; }
+  100% { background-position: 3rem 2rem, -3rem -2rem, 28px 28px, 28px 28px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-bg { animation: none; }
+}
