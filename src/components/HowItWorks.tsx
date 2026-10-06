@@ -195,22 +195,22 @@ export function HowItWorks() {
 
           {/* desktop: snake layout, 3 across */}
           <div className="hidden md:grid md:grid-cols-[1fr_2.5rem_1fr_2.5rem_1fr]">
-            <StageCard stage={stages[0]} />
+            <StageCard stage={stages[0]!} />
             <Flow dir="x" delay={0} />
-            <StageCard stage={stages[1]} />
+            <StageCard stage={stages[1]!} />
             <Flow dir="x" delay={0.45} />
-            <StageCard stage={stages[2]} />
+            <StageCard stage={stages[2]!} />
 
             <div className="col-start-5">
               <Flow dir="y" delay={0.9} />
             </div>
 
             <div className="col-span-5 flex flex-row-reverse">
-              <StageCard stage={stages[3]} />
+              <StageCard stage={stages[3]!} />
               <Flow dir="x-left" delay={1.35} />
-              <StageCard stage={stages[4]} />
+              <StageCard stage={stages[4]!} />
               <Flow dir="x-left" delay={1.8} />
-              <StageCard stage={stages[5]} />
+              <StageCard stage={stages[5]!} />
             </div>
           </div>
         </Reveal>
