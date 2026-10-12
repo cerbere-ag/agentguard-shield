@@ -1,59 +1,78 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Reveal } from "./Reveal";
 
-export function Faq() {
-  const faqs = [
-    {
-      q: "How does Cerbere AG detect prompt injections?",
-      a: "We use a 3-layer engine: ultra-fast regex patterns, a lightweight ML classifier, and an LLM judge for ambiguous cases. All of this runs in milliseconds before the prompt reaches your model.",
-    },
-    {
-      q: "Do my data leave my infrastructure?",
-      a: "No. With local or self-hosted deployment, all checks happen on your own network. No sensitive data is ever sent to third-party servers.",
-    },
-    {
-      q: "Which agent frameworks are compatible?",
-      a: "Our Python SDK integrates natively with LangGraph, CrewAI, and any agent using standard tool calls. We also support MCP for universal compatibility.",
-    },
-    {
-      q: "How do billing and observability work?",
-      a: "Every agent action generates a signed trace. You can set atomic budgets per agent and receive Slack or Gmail alerts for anomalous behavior or cost overruns.",
-    },
-    {
-      q: "Can I try it for free before committing?",
-      a: "Absolutely. The Free plan lets you connect up to 2 agents with a 7-day audit history, no credit card required.",
-    },
-    {
-      q: "Does Cerbere AG add noticeable latency?",
-      a: "Regex and policy checks run in milliseconds. The LLM judge only fires on ambiguous cases, and you can route it to a cheaper or faster model to keep latency low.",
-    },
-    {
-      q: "Can I use Cerbere AG through MCP?",
-      a: "Yes. Cerbere AG ships an MCP server, so Claude Code, Cursor and other MCP clients can connect and get the same protection as the Python SDK.",
-    },
-    {
-      q: "What happens when an action is blocked?",
-      a: "The action never reaches your tool. Cerbere AG returns a signed decision with the reason, and it appears immediately in your audit trail and alerts.",
-    },
-    {
-      q: "How do I uninstall or turn it off?",
-      a: "Remove the SDK wrapper or MCP connection from your agent's config. Cerbere AG has no persistent hooks in your systems once it's removed.",
-    },
-  ];
+const faqs = [
+  {
+    q: "How does Cerbere AG detect prompt injections?",
+    a: "We use a 3-layer engine: ultra-fast regex patterns, a lightweight ML classifier, and an LLM judge for ambiguous cases. All of this runs in milliseconds before the prompt reaches your model.",
+  },
+  {
+    q: "Do my data leave my infrastructure?",
+    a: "No. With local or self-hosted deployment, all checks happen on your own network. No sensitive data is ever sent to third-party servers.",
+  },
+  {
+    q: "Which agent frameworks are compatible?",
+    a: "Our Python SDK integrates natively with LangGraph, CrewAI, and any agent using standard tool calls. We also support MCP for universal compatibility.",
+  },
+  {
+    q: "How do billing and observability work?",
+    a: "Every agent action generates a signed trace. You can set atomic budgets per agent and receive Slack or Gmail alerts for anomalous behavior or cost overruns.",
+  },
+  {
+    q: "Can I try it for free before committing?",
+    a: "Absolutely. The Free plan lets you connect up to 2 agents with a 7-day audit history, no credit card required.",
+  },
+  {
+    q: "Does Cerbere AG add noticeable latency?",
+    a: "Regex and policy checks run in milliseconds. The LLM judge only fires on ambiguous cases, and you can route it to a cheaper or faster model to keep latency low.",
+  },
+  {
+    q: "Can I use Cerbere AG through MCP?",
+    a: "Yes. Cerbere AG ships an MCP server, so Claude Code, Cursor and other MCP clients can connect and get the same protection as the Python SDK.",
+  },
+  {
+    q: "What happens when an action is blocked?",
+    a: "The action never reaches your tool. Cerbere AG returns a signed decision with the reason, and it appears immediately in your audit trail and alerts.",
+  },
+  {
+    q: "How do I uninstall or turn it off?",
+    a: "Remove the SDK wrapper or MCP connection from your agent's config. Cerbere AG has no persistent hooks in your systems once it's removed.",
+  },
+];
 
+const marqueeCss =
+  ".faq-marquee{animation:faq-scroll 48s linear infinite}" +
+  ".faq-marquee:hover{animation-play-state:paused}" +
+  "@keyframes faq-scroll{from{transform:translateX(0)}to{transform:translateX(calc(-50% - 8px))}}" +
+  "@media (prefers-reduced-motion: reduce){.faq-marquee{animation:none;overflow-x:auto}}";
+
+export function Faq() {
   const [selectedFaq, setSelectedFaq] = useState<typeof faqs[0] | null>(null);
+
+  useEffect(() => {
+    if (!selectedFaq) return;
+
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setSelectedFaq(null);
+    };
+
+    document.addEventListener("keydown", onKey);
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = "";
+    };
+  }, [selectedFaq]);
 
   return (
     <section className="bg-ink py-20 md:py-28" id="faq">
       <div className="wrap">
         <Reveal className="max-w-2xl">
           <span className="eyebrow">faq</span>
-          <h2 className="mt-3 text-[clamp(26px,3.4vw,36px)]">
-            Frequently Asked Questions
-          </h2>
+          <h2 className="mt-3 text-[clamp(26px,3.4vw,36px)]">Frequently Asked Questions</h2>
         </Reveal>
 
-        {/* Défilement automatique, en pause au survol */}
         <Reveal>
           <div className="relative mt-10 overflow-hidden">
             <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-ink to-transparent" />
@@ -67,9 +86,7 @@ export function Faq() {
                   onClick={() => setSelectedFaq(item)}
                   className="flex-none w-[280px] md:w-[320px] rounded-sm border border-line-black bg-black/20 p-6 text-left transition-all hover:border-amber hover:bg-black/40 active:scale-[0.98]"
                 >
-                  <h3 className="font-display text-lg font-medium text-paper">
-                    {item.q}
-                  </h3>
+                  <h3 className="font-display text-lg font-medium text-paper">{item.q}</h3>
                   <span className="mt-4 inline-flex items-center gap-1 font-mono text-xs text-amber">
                     Read answer
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -83,66 +100,40 @@ export function Faq() {
         </Reveal>
       </div>
 
-      <style>{`
-        .faq-marquee {
-          animation: faq-scroll 48s linear infinite;
-        }
+      <style>{marqueeCss}</style>
 
-        .faq-marquee:hover {
-          animation-play-state: paused;
-        }
-
-        @keyframes faq-scroll {
-          from {
-            transform: translateX(0);
-          }
-
-          to {
-            transform: translateX(calc(-50% - 8px));
-          }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-          .faq-marquee {
-            animation: none;
-            overflow-x: auto;
-          }
-        }
-      `}</style>
-
-      {/* Modale */}
       {selectedFaq && (
-        <div 
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4"
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label={selectedFaq.q}
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm"
           onClick={() => setSelectedFaq(null)}
         >
-          <div 
+          <div
             className="relative w-full max-w-lg rounded-sm border border-amber bg-ink p-8 shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             <button
               type="button"
+              autoFocus
               onClick={() => setSelectedFaq(null)}
-              className="absolute right-4 top-4 text-paper/50 hover:text-amber transition-colors"
+              className="absolute right-4 top-4 text-paper/50 transition-colors hover:text-amber"
               aria-label="Close"
             >
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M18 6L6 18M6 6l12 12" />
               </svg>
             </button>
-            
+
             <span className="font-mono text-xs font-semibold text-amber">FAQ</span>
-            <h3 className="mt-3 text-xl font-display font-medium text-paper">
-              {selectedFaq.q}
-            </h3>
-            <p className="mt-4 text-[15px] leading-relaxed text-paper/70">
-              {selectedFaq.a}
-            </p>
-            
+            <h3 className="mt-3 font-display text-xl font-medium text-paper">{selectedFaq.q}</h3>
+            <p className="mt-4 text-[15px] leading-relaxed text-paper/70">{selectedFaq.a}</p>
+
             <button
               type="button"
               onClick={() => setSelectedFaq(null)}
-              className="mt-8 w-full rounded-sm bg-amber py-2.5 font-mono text-sm text-ink font-medium hover:bg-amber-deep transition-colors"
+              className="mt-8 w-full rounded-sm bg-amber py-2.5 font-mono text-sm font-medium text-ink transition-colors hover:bg-amber-deep"
             >
               Close
             </button>
@@ -152,4 +143,3 @@ export function Faq() {
     </section>
   );
 }
-
