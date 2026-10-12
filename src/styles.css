@@ -547,10 +547,6 @@
   align-items: center;
   justify-content: center;
   color: rgb(20 17 12);
-  overflow: hidden;
-  white-space: nowrap;
-  clip-path: inset(0 calc(100% - var(--wm-progress, 0) * 100%) 0 0);
-  transition: clip-path 120ms linear;
   -webkit-text-stroke: 1.5px rgb(20 17 12);
 }
 
