@@ -6,9 +6,11 @@ const linkColClass = "flex flex-col gap-2 font-mono text-[13px]";
 const linkClass = "opacity-75 hover:opacity-100";
 const headingClass = "mb-3 font-mono text-[11px] uppercase tracking-wider opacity-50";
 
-export function Footer() {
-  const markRef = useRef<HTMLDivElement>(null);
-  const [wmProgress, setWmProgress] = useState(0);
+const WORD = "CERBERE AG";
+
+function FooterWordmark() {
+  const ref = useRef<HTMLDivElement>(null);
+  const [p, setP] = useState(0);
 
   useEffect(() => {
     let raf = 0;
@@ -16,13 +18,13 @@ export function Footer() {
     const onScroll = () => {
       cancelAnimationFrame(raf);
       raf = requestAnimationFrame(() => {
-        const el = markRef.current;
+        const el = ref.current;
         if (!el) return;
         const rect = el.getBoundingClientRect();
         const vh = window.innerHeight;
-        // 0 quand le wordmark entre dans le viewport, 1 quand il est bien remonté
-        const p = 1 - Math.min(Math.max(rect.top / vh, 0), 1);
-        setWmProgress(Math.min(Math.max((p - 0.25) / 0.6, 0), 1));
+        // 0 quand le wordmark entre en bas du viewport, 1 quand il est bien remonté
+        const raw = 1 - Math.min(Math.max((rect.top - vh * 0.15) / (vh * 0.75), 0), 1);
+        setP(raw);
       });
     };
 
@@ -34,6 +36,32 @@ export function Footer() {
     };
   }, []);
 
+  const letters = WORD.split("");
+
+  return (
+    <div ref={ref} className="overflow-hidden px-4 pb-2 pt-6">
+      <div className="footer-wordmark" aria-label={WORD}>
+        {letters.map((ch, i) => {
+          if (ch === " ") return <span key={i}>{"\u00A0"}</span>;
+
+          const n = letters.length;
+          const local = Math.min(Math.max((p * (n + 1.5) - i) / 1.5, 0), 1);
+
+          return (
+            <span key={i} className="wm-letter" style={{ animationDelay: `${i * 45}ms` }}>
+              <span className="wm-outline">{ch}</span>
+              <span className="wm-fill" style={{ opacity: local }} aria-hidden="true">
+                {ch}
+              </span>
+            </span>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+export function Footer() {
   return (
     <footer className="bg-amber text-coal">
       <div className="px-5 pb-10 pt-20 text-center">
@@ -114,15 +142,7 @@ export function Footer() {
         </div>
       </div>
 
-      {/* Wordmark géant qui se colore au scroll */}
-      <div ref={markRef} className="overflow-hidden px-4 pb-2 pt-6">
-        <div
-          className="footer-wordmark"
-          style={{ ["--wm-progress" as string]: wmProgress.toFixed(3) }}
-        >
-          CERBERE AG
-        </div>
-      </div>
+      <FooterWordmark />
     </footer>
   );
 }
