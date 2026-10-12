@@ -3,29 +3,15 @@ import { APP, DOCS, GITHUB } from "@/lib/constants";
 import logo from "@/assets/cerbere-logo.jpeg";
 
 export function Topbar() {
-  const [hidden, setHidden] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  const [island, setIsland] = useState(false);
 
   useEffect(() => {
-    let lastY = window.scrollY;
     let raf = 0;
-
     const onScroll = () => {
       cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => {
-        const y = window.scrollY;
-        setScrolled(y > 24);
-        if (y < 80) {
-          setHidden(false);
-        } else if (y > lastY + 6) {
-          setHidden(true);
-        } else if (y < lastY - 6) {
-          setHidden(false);
-        }
-        lastY = y;
-      });
+      raf = requestAnimationFrame(() => setIsland(window.scrollY > 90));
     };
-
+    onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => {
       window.removeEventListener("scroll", onScroll);
@@ -34,14 +20,8 @@ export function Topbar() {
   }, []);
 
   return (
-    <header
-      className={[
-        "sticky top-0 z-50 border-b bg-ink/85 backdrop-blur-md transition-[transform,box-shadow,border-color] duration-300",
-        hidden ? "-translate-y-full" : "translate-y-0",
-        scrolled ? "border-line-black shadow-[0_10px_40px_oklch(0_0_0/0.45)]" : "border-transparent",
-      ].join(" ")}
-    >
-      <div className="wrap flex h-[68px] items-center justify-between">
+    <header className={island ? "topbar island" : "topbar"}>
+      <div className="topbar-inner">
         <a href="#" className="flex items-center gap-2.5 font-mono text-[17px] font-bold">
           <img
             src={logo}
