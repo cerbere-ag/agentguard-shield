@@ -196,7 +196,6 @@
   }
 }
 
-/* Correction ici : utilisation de @utility pour que Tailwind v4 reconnaisse la classe */
 @utility scrollbar-hide {
   scrollbar-width: none;
   &::-webkit-scrollbar {
@@ -288,9 +287,9 @@
 @media (prefers-reduced-motion: reduce) {
   .hero-bg { animation: none; }
 }
-/* ===== Design v2 ===== */
 
-/* Barre de progression de scroll (haut de page) */
+/* ===== Design v2 : progress bar, entrées, halo, grain ===== */
+
 .scroll-progress {
   position: fixed;
   top: 0;
@@ -302,7 +301,6 @@
   transition: transform 120ms linear;
 }
 
-/* Animations d'entrée (activées par Reveal) */
 @keyframes rise-in {
   from {
     opacity: 0;
@@ -320,7 +318,6 @@
   animation: rise-in 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-/* Halo derrière le hero */
 @keyframes pulse-glow {
   0%, 100% { opacity: 0.5; transform: scale(1); }
   50% { opacity: 0.85; transform: scale(1.08); }
@@ -330,7 +327,6 @@
   animation: pulse-glow 7s ease-in-out infinite;
 }
 
-/* Grain subtil sur le hero pour un rendu premium */
 .hero-grain::after {
   content: "";
   position: absolute;
@@ -340,92 +336,7 @@
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-/* ===== Scène 3D (CSS pur, aucune dépendance) ===== */
-.scene-wrap {
-  perspective: 1200px;
-  min-height: 460px;
-  display: grid;
-  place-items: center;
-}
-
-.scene {
-  position: relative;
-  width: 340px;
-  height: 340px;
-  transform-style: preserve-3d;
-  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.scene-auto {
-  animation: scene-spin 26s linear infinite;
-}
-
-@keyframes scene-spin {
-  from { transform: rotateX(-16deg) rotateY(0deg); }
-  to { transform: rotateX(-16deg) rotateY(360deg); }
-}
-
-.scene-plane {
-  position: absolute;
-  inset: 0;
-  border: 1px solid rgb(217 164 65 / 0.45);
-  background: linear-gradient(135deg, rgb(217 164 65 / 0.07), rgb(217 164 65 / 0.02));
-  backdrop-filter: blur(2px);
-  display: grid;
-  place-items: center;
-  transform-style: preserve-3d;
-  box-shadow: 0 0 40px rgb(217 164 65 / 0.08) inset;
-}
-
-.scene-plane span {
-  font-family: ui-monospace, "SFMono-Regular", monospace;
-  font-size: 12.5px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: rgb(245 240 228 / 0.85);
-  background: rgb(10 10 12 / 0.55);
-  padding: 4px 10px;
-  border: 1px solid rgb(245 240 228 / 0.12);
-  transform: translateZ(30px);
-  white-space: nowrap;
-}
-
-.scene-plane.decision {
-  border-color: var(--amber, #d9a441);
-  background: linear-gradient(135deg, rgb(217 164 65 / 0.18), rgb(217 164 65 / 0.05));
-}
-
-.scene-plane.decision span {
-  color: var(--amber, #d9a441);
-  border-color: rgb(217 164 65 / 0.5);
-}
-
-/* Ligne verticale de liaison entre les plans */
-.scene-axis {
-  position: absolute;
-  left: 50%;
-  top: -14%;
-  bottom: -14%;
-  width: 1px;
-  background: linear-gradient(to bottom, transparent, rgb(217 164 65 / 0.5), transparent);
-  transform: translateX(-50%);
-}
-
-/* ===== Wordmark géant du footer ===== */
-.footer-wordmark {
-  font-size: clamp(56px, 13.5vw, 220px);
-  line-height: 0.9;
-  letter-spacing: -0.02em;
-  font-weight: 800;
-  text-align: center;
-  user-select: none;
-  white-space: nowrap;
-  /* --wm-progress est piloté en JS entre 0 et 1 */
-  color: color-mix(in oklab, rgb(20 17 12 / 0.12), rgb(20 17 12 / 1) calc(var(--wm-progress, 0) * 100%));
-  transition: none;
-}
-
-/* ===== Bouton retour en haut ===== */
+/* Bouton retour en haut */
 .back-top {
   position: fixed;
   right: 22px;
@@ -458,11 +369,11 @@
 
 @media (prefers-reduced-motion: reduce) {
   .reveal-in,
-  .hero-glow,
-  .scene-auto {
+  .hero-glow {
     animation: none;
   }
 }
+
 /* ===== v3 : îlot topbar ===== */
 .topbar {
   position: fixed;
@@ -488,7 +399,6 @@
   transition: all 0.45s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* État îlot : la barre se détache en pill flottante */
 .topbar.island {
   padding-top: 12px;
 }
@@ -504,7 +414,7 @@
   padding: 0 22px;
 }
 
-/* ===== v3.1 : wordmark footer dynamique (outline -> remplissage au scroll) ===== */
+/* ===== v3.1 : wordmark footer dynamique (outline -> remplissage vague au scroll) ===== */
 .footer-wordmark {
   font-size: clamp(56px, 13.5vw, 220px);
   line-height: 0.9;
@@ -516,16 +426,11 @@
   font-family: var(--font-display, inherit);
 }
 
-/* Chaque lettre est un span. Deux calques empilés :
-   - outline : contour du texte (stroke), toujours visible
-   - fill : texte plein couleur, révélé par une largeur croissante
-   La largeur du calque fill est pilotée par --wm-progress (0 à 1, en JS). */
 .wm-letter {
   position: relative;
   display: inline-block;
 }
 
-/* Légère montée de chaque lettre quand elle entre dans le viewport */
 @keyframes wm-rise {
   from { transform: translateY(0.35em); }
   to { transform: translateY(0); }
@@ -554,87 +459,6 @@
   .wm-letter {
     animation: none;
   }
-}
-
-/* ===== v3 : scène 3D -> schéma au scroll ===== */
-.morph-wrap {
-  position: relative;
-  height: 320vh; /* la longueur du "voyage" scroll */
-}
-
-.morph-sticky {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  display: grid;
-  place-items: center;
-  overflow: hidden;
-}
-
-.morph-scene {
-  position: relative;
-  width: 340px;
-  height: 340px;
-  transform-style: preserve-3d;
-  will-change: transform;
-}
-
-.morph-plane {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  border: 1px solid rgb(217 164 65 / 0.45);
-  background: linear-gradient(135deg, rgb(217 164 65 / 0.07), rgb(217 164 65 / 0.02));
-  transform-style: preserve-3d;
-  will-change: transform;
-  border-radius: 2px;
-}
-
-.morph-plane.decision {
-  border-color: var(--amber, #d9a441);
-  background: linear-gradient(135deg, rgb(217 164 65 / 0.18), rgb(217 164 65 / 0.05));
-}
-
-.morph-label {
-  font-family: ui-monospace, "SFMono-Regular", monospace;
-  font-size: 12.5px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: rgb(245 240 228 / 0.85);
-  background: rgb(10 10 12 / 0.55);
-  padding: 4px 10px;
-  border: 1px solid rgb(245 240 228 / 0.12);
-  white-space: nowrap;
-}
-
-.morph-plane.decision .morph-label {
-  color: var(--amber, #d9a441);
-  border-color: rgb(217 164 65 / 0.5);
-}
-
-/* Description : visible seulement en mode schéma aplati */
-.morph-desc {
-  font-size: 13px;
-  line-height: 1.5;
-  color: rgb(245 240 228 / 0.65);
-  text-align: center;
-  max-width: 26ch;
-  opacity: 0;
-}
-
-/* Axe vertical qui relie les étapes en mode schéma */
-.morph-axis {
-  position: absolute;
-  left: 50%;
-  top: -60%;
-  bottom: -60%;
-  width: 1px;
-  background: linear-gradient(to bottom, transparent, rgb(217 164 65 / 0.5), transparent);
-  transform: translateX(-50%);
 }
 
 /* ===== v3 : radar des menaces (Research) ===== */
@@ -680,7 +504,6 @@
   border: 1px solid rgb(217 164 65 / 0.4);
   padding: 4px 10px;
   white-space: nowrap;
-  /* on annule la rotation du parent pour que le texte reste lisible */
   animation: orbit-spin 30s linear infinite reverse;
 }
 
@@ -706,108 +529,12 @@
   border: 1px solid rgb(217 164 65 / 0.6);
   padding: 10px 16px;
   box-shadow: 0 0 40px rgb(217 164 65 / 0.25);
-  transform: rotateX(-62deg); /* le noyau reste face à nous */
+  transform: rotateX(-62deg);
 }
 
 @media (prefers-reduced-motion: reduce) {
   .orbit-ring,
   .orbit-chip {
-    animation: none;
-  }
-}
-/* ===== v3 : îlot topbar ===== */
-.topbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 50;
-  display: flex;
-  justify-content: center;
-  padding: 0;
-  transition: padding 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.topbar-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  height: 68px;
-  padding: 0 24px;
-  background: transparent;
-  border-bottom: 1px solid transparent;
-  transition: all 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-/* État îlot : la barre se détache en pill flottante */
-.topbar.island {
-  padding-top: 12px;
-}
-
-.topbar.island .topbar-inner {
-  max-width: 880px;
-  height: 56px;
-  border-radius: 999px;
-  border: 1px solid rgb(217 164 65 / 0.28);
-  background: rgb(10 10 12 / 0.82);
-  backdrop-filter: blur(14px);
-  box-shadow: 0 14px 40px oklch(0 0 0 / 0.45), 0 0 0 1px rgb(217 164 65 / 0.04);
-  padding: 0 22px;
-}
-
-/* ===== v3.1 : wordmark footer dynamique (outline -> remplissage au scroll) ===== */
-.footer-wordmark {
-  font-size: clamp(56px, 13.5vw, 220px);
-  line-height: 0.9;
-  letter-spacing: -0.01em;
-  font-weight: 800;
-  text-align: center;
-  user-select: none;
-  white-space: nowrap;
-  font-family: var(--font-display, inherit);
-}
-
-/* Chaque lettre est un span. Deux calques empilés :
-   - outline : contour du texte (stroke), toujours visible
-   - fill : texte plein couleur, révélé par une largeur croissante
-   La largeur du calque fill est pilotée par --wm-progress (0 à 1, en JS). */
-.wm-letter {
-  position: relative;
-  display: inline-block;
-}
-
-/* Légère montée de chaque lettre quand elle entre dans le viewport */
-@keyframes wm-rise {
-  from { transform: translateY(0.35em); }
-  to { transform: translateY(0); }
-}
-
-.wm-letter {
-  animation: wm-rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-.wm-outline {
-  color: transparent;
-  -webkit-text-stroke: 1.5px rgb(20 17 12 / 0.28);
-}
-
-.wm-fill {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: rgb(20 17 12);
-  overflow: hidden;
-  white-space: nowrap;
-  clip-path: inset(0 calc(100% - var(--wm-progress, 0) * 100%) 0 0);
-  transition: clip-path 120ms linear;
-  -webkit-text-stroke: 1.5px rgb(20 17 12);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .wm-letter {
     animation: none;
   }
 }
@@ -846,7 +573,6 @@
 }
 
 /* Bandeau de titre du bloc, coloré par étape */
-./* Bandeau de titre du bloc, coloré par étape */
 .arch-head {
   display: flex;
   align-items: center;
