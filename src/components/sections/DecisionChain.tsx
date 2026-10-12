@@ -1,6 +1,6 @@
 import { Reveal } from "@/components/Reveal";
 import { HowItWorks } from "@/components/HowItWorks";
-import { DecisionScene } from "@/components/DecisionScene";
+import { ArchitectureDiagram } from "@/components/ArchitectureDiagram";
 
 export function DecisionChain() {
   return (
@@ -8,17 +8,19 @@ export function DecisionChain() {
       <div className="wrap">
         <Reveal className="max-w-2xl pt-20 md:pt-28">
           <span className="eyebrow">how it works</span>
-          <h2 className="mt-3 text-[clamp(26px,3.4vw,36px)]">One decision chain, every time.</h2>
+          <h2 className="mt-3 text-[clamp(26px,3.4vw,36px)]">
+            The AgentGuard Security Architecture.
+          </h2>
           <p className="mt-3.5 max-w-[54ch] text-base text-paper/65">
-            Cerbere sits inline on every LLM call and every tool call. Keep scrolling: the diagram
-            unfolds into the exact chain each call walks before it is allowed to run.
+            From agent call to audited decision: runtime, policy, observability and governance
+            in one stack. Watch the flow come alive as you scroll.
           </p>
         </Reveal>
-      </div>
 
-      <DecisionScene />
+        <Reveal className="mt-12">
+          <ArchitectureDiagram />
+        </Reveal>
 
-      <div className="wrap">
         <HowItWorks />
       </div>
     </section>
