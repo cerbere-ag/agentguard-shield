@@ -10,12 +10,12 @@ type Integration = {
 const integrations: Integration[] = [
   {
     name: "Python",
-    logo: "https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/python/default.svg",
+    logo: "/logos/python.svg",
     fallback: "PY",
   },
   {
     name: "MCP",
-    logo: "https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/model-context-protocol/default.svg",
+    logo: "/logos/model-context-protocol.svg",
     fallback: "MCP",
   },
   {
@@ -24,27 +24,27 @@ const integrations: Integration[] = [
   },
   {
     name: "Composio",
-    logo: "https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/composio/default.svg",
+    logo: "/logos/composio.svg",
     fallback: "C",
   },
   {
     name: "OpenAI",
-    logo: "https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/openai/default.svg",
+    logo: "/logos/openai.svg",
     fallback: "O",
   },
   {
     name: "Anthropic",
-    logo: "https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/claude-code/color.svg",
+    logo: "/logos/claude-code.svg",
     fallback: "A",
   },
   {
     name: "LangGraph",
-    logo: "https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/langgraph/default.svg",
+    logo: "/logos/langgraph.svg",
     fallback: "LG",
   },
   {
     name: "CrewAI",
-    logo: "https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/crewai/default.svg",
+    logo: "/logos/crewai.svg",
     fallback: "CA",
   },
 ];
@@ -56,8 +56,10 @@ function IntegrationItem({ item }: { item: Integration }) {
         {item.logo ? (
           <img
             src={item.logo}
-            alt={`${item.name} logo`}
-            className="h-6 w-6 object-contain grayscale opacity-70 transition-opacity duration-200 group-hover:opacity-100"
+            alt=""
+            width={24}
+            height={24}
+            className="h-6 w-6 object-contain brightness-0 invert opacity-70 transition-opacity duration-200 group-hover:opacity-100"
             loading="lazy"
             onError={(event) => {
               event.currentTarget.style.display = "none";

@@ -8,12 +8,12 @@ const amb = "text-amber";
 
 const installLines: Line[] = [
   [{ t: "$ pip install cerbere-ag" }],
-  [{ t: "Successfully installed cerbere-ag-0.1.3", c: dim }],
+  [{ t: "Successfully installed cerbere-ag-0.6.0", c: dim }],
   [],
   [{ t: "$ export AGENTGUARD_API_KEY=ag_live_..." }],
-  [{ t: "$ cerbere" }],
-  [{ t: "   🛡️  CERBERE AG IS ACTIVE  🛡️", c: amb }],
-  [{ t: "   The three-headed guardian is watching your agents.", c: dim }],
+  [{ t: "$ python agent.py" }],
+  [{ t: "   Cerbere AG is active on this agent.", c: amb }],
+  [{ t: "   Policy, taint tracking and runtime risk are on.", c: dim }],
 ];
 
 const runLines: Line[] = [

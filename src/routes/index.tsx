@@ -44,13 +44,13 @@ function Index() {
       <ScrollProgress />
       <Topbar />
       <Hero />
+      <Mission />
       <DecisionChain />
+      <Observability />
       <Integrations />
       <SeeItWork />
       <Benchmark />
       <Research />
-      <Mission />
-      <Observability />
       <Deployment />
       <Pricing />
       <Faq />

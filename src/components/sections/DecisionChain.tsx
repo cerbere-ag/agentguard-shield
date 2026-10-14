@@ -1,27 +1,25 @@
 import { Reveal } from "@/components/Reveal";
-import { HowItWorks } from "@/components/HowItWorks";
-import { ArchitectureDiagram } from "@/components/ArchitectureDiagram";
+import { ArchitectureFigure } from "@/components/ArchitectureFigure";
 
 export function DecisionChain() {
   return (
-    <section className="border-t border-line-black bg-ink text-paper">
-      <div className="wrap">
+    <section id="how-it-works" className="border-t border-line-black bg-ink text-paper">
+      <div className="wrap pb-20 md:pb-28">
         <Reveal className="max-w-2xl pt-20 md:pt-28">
           <span className="eyebrow">how it works</span>
           <h2 className="mt-3 text-[clamp(26px,3.4vw,36px)]">
-            The AgentGuard Security Architecture.
+            From agent call to audited decision.
           </h2>
-          <p className="mt-3.5 max-w-[54ch] text-base text-paper/65">
-            From agent call to audited decision: runtime, policy, observability and governance
-            in one stack. Watch the flow come alive as you scroll.
+          <p className="mt-3.5 max-w-[56ch] text-base text-paper/65">
+            Cerbere AG sits between your agent and its tools. Every call is intercepted,
+            classified, decided on by policy and risk, observed, and written to an audit log. One
+            trace follows it the whole way.
           </p>
         </Reveal>
 
         <Reveal className="mt-12">
-          <ArchitectureDiagram />
+          <ArchitectureFigure />
         </Reveal>
-
-        <HowItWorks />
       </div>
     </section>
   );

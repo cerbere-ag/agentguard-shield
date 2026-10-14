@@ -1,125 +1,131 @@
-import { useEffect, useState } from "react";
 import { Reveal } from "@/components/Reveal";
 import { CopyableCode } from "@/components/CopyableCode";
-import { APP, GITHUB, MCP_INSTALL_CMD } from "@/lib/constants";
+import { APP, DOCS, GITHUB, MCP_INSTALL_CMD } from "@/lib/constants";
 
-const rotating = [
-  "blocks prompt injection before it reaches your tools",
-  "stops data exfiltration before it leaves your systems",
-  "catches destructive commands before they run",
-  "observes every agent decision in one audit trail",
+// Preuves vérifiables uniquement. Remplacer ou compléter par des chiffres réels
+// (pilotes, essais en cours, intégrations) dès qu'ils existent.
+const proof = [
+  { k: "Open source", v: "SDK under Apache 2.0" },
+  { k: "Published", v: "pip install cerbere-ag" },
+  { k: "Tested", v: "500+ automated tests" },
+  { k: "Verifiable", v: "Ed25519-signed decisions" },
 ];
 
 export function Hero() {
-  const [rot, setRot] = useState(0);
-
-  useEffect(() => {
-    const id = setInterval(() => setRot((i) => (i + 1) % rotating.length), 3200);
-    return () => clearInterval(id);
-  }, []);
-
   return (
-    <section className="hero-grain wrap relative isolate grid items-center gap-14 py-20 md:py-24 lg:grid-cols-[1.15fr_.85fr]">
-      {/* halo animé derrière le contenu */}
+    <section className="hero-grain relative isolate overflow-hidden">
       <div
-        className="hero-glow pointer-events-none absolute -top-40 left-1/2 -z-10 size-[560px] -translate-x-1/2 rounded-full opacity-40 blur-3xl"
-        style={{ background: "radial-gradient(closest-side, rgb(217 164 65 / 0.25), transparent)" }}
+        className="hero-glow pointer-events-none absolute left-1/2 top-[-140px] -z-10 h-[640px] w-[min(1100px,130vw)] -translate-x-1/2 rounded-full opacity-50 blur-3xl"
+        style={{ background: "radial-gradient(closest-side, rgb(217 164 65 / 0.3), transparent)" }}
         aria-hidden="true"
       />
 
-      <div>
+      <div className="wrap pt-28 text-center md:pt-36">
         <Reveal>
-          <span className="eyebrow">security &amp; observability layer</span>
+          <a
+            href={GITHUB}
+            target="_blank"
+            rel="noopener"
+            className="inline-flex items-center gap-2.5 rounded-full border border-line-black bg-black/30 px-4 py-1.5 font-mono text-[12.5px] text-paper/75 transition-colors hover:border-amber hover:text-amber"
+          >
+            <span className="size-1.5 rounded-full bg-amber" aria-hidden="true" />
+            Open-source SDK, live on PyPI
+            <span aria-hidden="true">→</span>
+          </a>
 
-          {/* Titre plus grand : clamp(42px, 6.4vw, 84px) */}
-          <h1 className="mt-4 text-[clamp(42px,6.4vw,84px)] leading-[1.04]">
-            <span className="block">Cerbere AG</span>
-
-            <span className="relative mt-1 block min-h-[1.2em] text-amber">
-              {rotating.map((line, i) => (
-                <span
-                  key={line}
-                  className={[
-                    "transition-all duration-500",
-                    i === rot
-                      ? "relative block translate-y-0 opacity-100"
-                      : "absolute left-0 top-0 block w-full translate-y-3 opacity-0",
-                  ].join(" ")}
-                >
-                  {line}
-                </span>
-              ))}
-            </span>
+          <h1 className="mx-auto mt-8 max-w-[19ch] text-[clamp(42px,7vw,92px)] leading-[1.03] tracking-tight">
+            Give your agents autonomy,{" "}
+            <span className="text-amber">without giving up control.</span>
           </h1>
-        </Reveal>
 
-        <Reveal>
-          <p className="mt-6 max-w-[46ch] text-[19px] text-paper/70">
-            Security and observability layer to control your AI agents in real time. It is the
-            agentic era. Stay in control.
+          <p className="mx-auto mt-8 max-w-[62ch] text-[clamp(17px,1.5vw,20px)] text-paper/70">
+            Cerbere AG is the runtime security and observability layer for AI agents. Before every
+            tool call runs, it decides whether the action is allowed, needs a human, or is
+            blocked, and it records every decision.
           </p>
         </Reveal>
 
         <Reveal>
-          <div className="mt-9 space-y-5">
-            <div className="flex flex-wrap gap-3.5">
-              <a
-                href={APP + "/login"}
-                className="inline-flex items-center rounded-sm bg-amber px-4.5 py-2.5 font-mono text-sm text-ink transition-colors hover:bg-amber-deep"
-              >
-                Get started free
-              </a>
+          <div className="mt-10 flex flex-wrap items-center justify-center gap-3.5">
+            <a
+              href={APP + "/login"}
+              className="inline-flex items-center rounded-sm bg-amber px-6 py-3 font-mono text-sm text-ink transition-colors hover:bg-amber-deep"
+            >
+              Get started free
+            </a>
+            <a
+              href={GITHUB}
+              target="_blank"
+              rel="noopener"
+              className="inline-flex items-center rounded-sm border border-line-black px-6 py-3 font-mono text-sm transition-colors hover:border-amber hover:text-amber"
+            >
+              View on GitHub
+            </a>
+            <a
+              href={DOCS}
+              className="inline-flex items-center gap-2 px-3 py-3 font-mono text-sm text-paper/70 transition-colors hover:text-amber"
+            >
+              Read the docs <span aria-hidden="true">→</span>
+            </a>
+          </div>
 
-              <a
-                href={GITHUB}
-                target="_blank"
-                rel="noopener"
-                className="inline-flex items-center rounded-sm border border-line-black px-4.5 py-2.5 font-mono text-sm transition-colors hover:border-amber hover:text-amber"
-              >
-                View on GitHub
-              </a>
-            </div>
-
+          <div className="mx-auto mt-9 grid max-w-3xl gap-3.5 text-left md:grid-cols-2">
             <div>
               <span className="mb-1.5 block font-mono text-[11px] uppercase tracking-wider text-paper/40">
                 Python SDK
               </span>
               <CopyableCode code="pip install cerbere-ag" />
             </div>
-
             <div>
               <span className="mb-1.5 block font-mono text-[11px] uppercase tracking-wider text-paper/40">
-                MCP · Claude Code, Cursor and other MCP clients
+                MCP · Claude Code, Cursor and others
               </span>
               <CopyableCode code={MCP_INSTALL_CMD} />
             </div>
           </div>
         </Reveal>
+
+        <Reveal className="relative mx-auto mt-16 max-w-[1120px] text-left">
+          <div
+            className="absolute -inset-x-8 -top-8 -z-10 h-full rounded-[32px] bg-amber/10 blur-3xl"
+            aria-hidden="true"
+          />
+          <div className="relative max-h-[380px] overflow-hidden rounded-xl border border-line-black bg-coal shadow-[0_40px_120px_rgb(0_0_0/0.65)] md:max-h-[640px]">
+            <div className="flex items-center gap-2 border-b border-line-black px-4 py-2.5">
+              <span className="size-2.5 rounded-full bg-paper/20" />
+              <span className="size-2.5 rounded-full bg-paper/20" />
+              <span className="size-2.5 rounded-full bg-paper/20" />
+              <span className="mx-auto rounded-sm bg-black/40 px-4 py-0.5 font-mono text-[11.5px] text-paper/45">
+                app.cerbereag.site
+              </span>
+            </div>
+            <img
+              src="/product/dashboard-overview.webp"
+              width={1800}
+              height={1125}
+              alt="Cerbere AG dashboard: decisions per minute, blocked rate, cost, the latest allowed and blocked agent actions, and top threats"
+              fetchPriority="high"
+              decoding="async"
+              className="block h-auto w-[240%] max-w-none -translate-x-[16%] md:w-full md:translate-x-0"
+            />
+            <div
+              className="pointer-events-none absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-ink to-transparent"
+              aria-hidden="true"
+            />
+          </div>
+        </Reveal>
       </div>
 
-      <Reveal className="border border-line-black p-5.5 font-mono text-[13px] text-paper/55">
-        <div className="mb-4 flex gap-1.5">
-          <span className="size-2.5 rounded-full bg-paper/20" />
-          <span className="size-2.5 rounded-full bg-paper/20" />
-          <span className="size-2.5 rounded-full bg-paper/20" />
-        </div>
-
-        {[
-          ["agent_id", "support-agent-04", ""],
-          ["tool", "send_email", ""],
-          ["check", "exfiltration pattern", ""],
-          ["decision", "BLOCKED", "text-deny"],
-          ["logged to", "audit trail", ""],
-        ].map(([k, v, c], i) => (
-          <div
-            key={k}
-            className={["flex", "justify-between", "py-1.5", i === 0 ? "" : "border-t", "border-line-black"].join(" ")}
-          >
-            <span>{k}</span>
-            <b className={["font-medium", c ? c : "text-paper"].join(" ")}>{v}</b>
-          </div>
-        ))}
-      </Reveal>
+      <div className="wrap relative z-10 pb-20 pt-2 md:pb-24">
+        <dl className="grid grid-cols-2 gap-px border border-line-black bg-line-black md:grid-cols-4">
+          {proof.map((p) => (
+            <div key={p.k} className="bg-ink px-5 py-4 text-left">
+              <dt className="font-mono text-[11px] uppercase tracking-wider text-paper/40">{p.k}</dt>
+              <dd className="mt-1 text-[15px] text-paper">{p.v}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
     </section>
   );
 }

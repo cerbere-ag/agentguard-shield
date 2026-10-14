@@ -19,6 +19,21 @@ const items = [
   },
 ];
 
+const shots = [
+  {
+    src: "/product/dashboard-trace.webp",
+    title: "Trace waterfall",
+    caption: "Every call of a run, its latency, the checks that ran and why an action was held back.",
+    alt: "Cerbere AG trace view: a waterfall of four agent calls and the reason the last one, send_email, was held back for approval",
+  },
+  {
+    src: "/product/dashboard-flow.webp",
+    title: "Data flow",
+    caption: "Where each data classification goes, so a secret reaching an external tool stands out.",
+    alt: "Cerbere AG data flow diagram: a SECRET band flowing into the http_post tool, a CONFIDENTIAL band into send_email, public data into other tools",
+  },
+];
+
 export function Observability() {
   return (
     <section className="bg-amber py-20 text-coal md:py-28">
@@ -29,9 +44,9 @@ export function Observability() {
             Full visibility into every agent decision.
           </h2>
           <p className="mt-3.5 max-w-[52ch] text-base text-coal/70">
-            Security means nothing without observability. The dashboard below is one tool in the
-            Cerbere package: the SDK and policy engine work standalone too, but this is what you
-            get once a collector is running.
+            Security means nothing without observability. These are real screens from the
+            dashboard. The SDK and policy engine work standalone too, but this is what you get
+            once a collector is running.
           </p>
 
           <a
@@ -45,14 +60,28 @@ export function Observability() {
           </a>
         </Reveal>
 
-        <Reveal className="mt-12 overflow-hidden rounded-lg border border-line-coal bg-coal shadow-[0_30px_80px_oklch(0.19_0.008_45/0.35)]">
-          <img
-            src="/collector/collector.png"
-            alt="Cerbere AG collector dashboard: service health, request volume, cost and the daily activity heatmap"
-            className="w-full"
-            loading="lazy"
-          />
-        </Reveal>
+        <div className="mt-12 grid gap-6 lg:grid-cols-2">
+          {shots.map((shot) => (
+            <Reveal key={shot.src}>
+              <figure>
+                <div className="overflow-hidden rounded-lg border border-line-coal bg-coal shadow-[0_30px_80px_oklch(0.19_0.008_45/0.35)]">
+                  <img
+                    src={shot.src}
+                    width={1600}
+                    height={1000}
+                    alt={shot.alt}
+                    loading="lazy"
+                    decoding="async"
+                    className="block h-auto w-full"
+                  />
+                </div>
+                <figcaption className="mt-3 text-[14px] text-coal/75">
+                  <span className="font-semibold text-coal">{shot.title}.</span> {shot.caption}
+                </figcaption>
+              </figure>
+            </Reveal>
+          ))}
+        </div>
 
         <div className="mt-12 grid gap-px border border-line-coal bg-line-coal md:grid-cols-3">
           {items.map((item) => (
