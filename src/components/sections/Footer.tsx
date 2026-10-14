@@ -8,9 +8,19 @@ const headingClass = "mb-3 font-mono text-[11px] uppercase tracking-wider opacit
 
 const WORD = "CERBERE AG";
 
+// Interpolation coal -> rouge profond (deny) dans l'espace OKLCH
+function tint(q: number) {
+  const l = 0.19 + q * 0.26; // 0.19 -> 0.45
+  const c = 0.008 + q * 0.152; // 0.008 -> 0.16
+  const h = 45 - q * 15; // 45 -> 30
+  return `oklch(${l.toFixed(3)} ${c.toFixed(3)} ${h.toFixed(1)})`;
+}
+
 function FooterWordmark() {
   const ref = useRef<HTMLDivElement>(null);
-  const [p, setP] = useState(0);
+  // p : progression de la révélation (outline -> remplissage)
+  // q : progression "bas de page" (0 = wordmark révélé, 1 = tout en bas)
+  const [pq, setPq] = useState<[number, number]>([0, 0]);
 
   useEffect(() => {
     let raf = 0;
@@ -22,25 +32,41 @@ function FooterWordmark() {
         if (!el) return;
         const rect = el.getBoundingClientRect();
         const vh = window.innerHeight;
-        // 0 quand le wordmark entre en bas du viewport, 1 quand il est bien remonté
-        const raw = 1 - Math.min(Math.max((rect.top - vh * 0.15) / (vh * 0.75), 0), 1);
-        setP(raw);
+
+        // Révélation : 0 quand le wordmark entre en bas du viewport, 1 quand il est remonté
+        const p = 1 - Math.min(Math.max((rect.top - vh * 0.15) / (vh * 0.75), 0), 1);
+
+        // Bas de page : 0 quand le wordmark est révélé, 1 quand il colle au bas du viewport
+        const q = 1 - Math.min(Math.max((rect.bottom - vh) / (vh * 0.22), 0), 1);
+
+        setPq([p, q]);
       });
     };
 
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
     return () => {
       window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
       cancelAnimationFrame(raf);
     };
   }, []);
 
+  const [p, q] = pq;
   const letters = WORD.split("");
 
   return (
     <div ref={ref} className="overflow-hidden px-4 pb-2 pt-6">
-      <div className="footer-wordmark" aria-label={WORD}>
+      <div
+        className={`footer-wordmark${q > 0.85 ? " wm-bottom" : ""}`}
+        aria-label={WORD}
+        style={{
+          // Les lettres s'écartent doucement au fur et à mesure qu'on descend
+          letterSpacing: `${(-0.01 + q * 0.07).toFixed(3)}em`,
+          color: tint(q),
+        }}
+      >
         {letters.map((ch, i) => {
           if (ch === " ") return <span key={i}>{"\u00A0"}</span>;
 

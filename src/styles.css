@@ -424,6 +424,8 @@
   user-select: none;
   white-space: nowrap;
   font-family: var(--font-display, inherit);
+  /* la couleur et le letter-spacing sont pilotés en JS au scroll */
+  transition: color 0.15s linear;
 }
 
 .wm-letter {
@@ -442,7 +444,8 @@
 
 .wm-outline {
   color: transparent;
-  -webkit-text-stroke: 1.5px rgb(20 17 12 / 0.28);
+  -webkit-text-stroke: 1.5px currentColor;
+  opacity: 0.28;
 }
 
 .wm-fill {
@@ -451,12 +454,44 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: rgb(20 17 12);
-  -webkit-text-stroke: 1.5px rgb(20 17 12);
+  color: currentColor;
+}
+
+/* Halo néon qui apparaît quand on atteint le bas */
+.wm-bottom {
+  text-shadow:
+    0 0 18px color-mix(in oklab, currentColor 45%, transparent),
+    0 0 60px color-mix(in oklab, currentColor 25%, transparent);
+}
+
+/* Balayage lumineux en boucle une fois tout en bas */
+.wm-bottom::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    rgb(255 255 255 / 0.55) 50%,
+    transparent 60%
+  );
+  background-size: 250% 100%;
+  mix-blend-mode: overlay;
+  animation: wm-sweep 3.2s linear infinite;
+}
+
+@keyframes wm-sweep {
+  0% { background-position: 120% 50%; }
+  100% { background-position: -120% 50%; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .wm-letter {
     animation: none;
+  }
+  .wm-bottom::after {
+    animation: none;
+    display: none;
   }
 }
