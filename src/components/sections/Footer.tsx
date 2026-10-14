@@ -17,58 +17,13 @@ function tint(q: number) {
 }
 
 function FooterWordmark() {
-  const ref = useRef<HTMLDivElement>(null);
-  const [pq, setPq] = useState<[number, number]>([0, 0]);
-
-  useEffect(() => {
-    let raf = 0;
-
-    const onScroll = () => {
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => {
-        const el = ref.current;
-        if (!el) return;
-        const rect = el.getBoundingClientRect();
-        const vh = window.innerHeight;
-        const p = 1 - Math.min(Math.max((rect.top - vh * 0.15) / (vh * 0.75), 0), 1);
-        const q = 1 - Math.min(Math.max((rect.bottom - vh) / (vh * 0.22), 0), 1);
-        setPq([p, q]);
-      });
-    };
-
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-      cancelAnimationFrame(raf);
-    };
-  }, []);
-
-  const [p, q] = pq;
-
   return (
-    <div ref={ref} className="overflow-hidden px-4 pb-2 pt-6">
-      <div
-        className={`footer-wordmark${q > 0.85 ? " wm-bottom" : ""}`}
-        aria-label={WORD}
-        style={{ letterSpacing: `${(-0.01 + q * 0.07).toFixed(3)}em` }}
-      >
-        {WORD.split("").map((ch, i) => (
-          <span
-            key={i}
-            className="wm-letter"
-            style={{
-              animationDelay: `${i * 45}ms`,
-              opacity: Math.min(Math.max((p * 14 - i) / 1.5, 0), 1),
-              color: `oklch(${(0.19 + q * 0.26).toFixed(3)} ${(0.008 + q * 0.152).toFixed(3)} ${(45 - q * 15).toFixed(1)})`,
-            }}
-          >
-            {ch === " " ? "\u00A0" : ch}
-          </span>
-        ))}
-      </div>
+    <div className="px-4 pb-2 pt-6">
+      <img
+        src="/cerbere-ag.gif"
+        alt="CERBERE AG"
+        className="mx-auto w-full max-w-[900px]"
+      />
     </div>
   );
 }
