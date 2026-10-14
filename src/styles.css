@@ -415,22 +415,23 @@
 }
 
 /* ===== v3.1 : wordmark footer dynamique (outline -> remplissage vague au scroll) ===== */
+/* ===== wordmark footer ===== */
 .footer-wordmark {
-  font-size: clamp(56px, 13.5vw, 220px);
+  position: relative;
+  font-size: clamp(48px, 11.5vw, 190px);
   line-height: 0.9;
-  letter-spacing: -0.01em;
   font-weight: 800;
   text-align: center;
   user-select: none;
   white-space: nowrap;
   font-family: var(--font-display, inherit);
-  /* la couleur et le letter-spacing sont pilotés en JS au scroll */
-  transition: color 0.15s linear;
+  color: rgb(20 17 12 / 0.15); /* couleur de "repos" (outline fantôme) */
 }
 
 .wm-letter {
-  position: relative;
   display: inline-block;
+  animation: wm-rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+  transition: color 0.15s linear;
 }
 
 @keyframes wm-rise {
@@ -438,60 +439,13 @@
   to { transform: translateY(0); }
 }
 
-.wm-letter {
-  animation: wm-rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-.wm-outline {
-  color: transparent;
-  -webkit-text-stroke: 1.5px currentColor;
-  opacity: 0.28;
-}
-
-.wm-fill {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: currentColor;
-}
-
-/* Halo néon qui apparaît quand on atteint le bas */
 .wm-bottom {
   text-shadow:
-    0 0 18px color-mix(in oklab, currentColor 45%, transparent),
-    0 0 60px color-mix(in oklab, currentColor 25%, transparent);
-}
-
-/* Balayage lumineux en boucle une fois tout en bas */
-.wm-bottom::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: linear-gradient(
-    105deg,
-    transparent 40%,
-    rgb(255 255 255 / 0.55) 50%,
-    transparent 60%
-  );
-  background-size: 250% 100%;
-  mix-blend-mode: overlay;
-  animation: wm-sweep 3.2s linear infinite;
-}
-
-@keyframes wm-sweep {
-  0% { background-position: 120% 50%; }
-  100% { background-position: -120% 50%; }
+    0 0 18px rgb(255 255 255 / 0.35),
+    0 0 60px rgb(255 255 255 / 0.18);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .wm-letter {
-    animation: none;
-  }
-  .wm-bottom::after {
-    animation: none;
-    display: none;
-  }
+  .wm-letter { animation: none; }
+  .wm-bottom { text-shadow: none; }
 }
