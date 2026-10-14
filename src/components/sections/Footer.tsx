@@ -18,8 +18,6 @@ function tint(q: number) {
 
 function FooterWordmark() {
   const ref = useRef<HTMLDivElement>(null);
-  // p : progression de la révélation (outline -> remplissage)
-  // q : progression "bas de page" (0 = wordmark révélé, 1 = tout en bas)
   const [pq, setPq] = useState<[number, number]>([0, 0]);
 
   useEffect(() => {
@@ -32,13 +30,8 @@ function FooterWordmark() {
         if (!el) return;
         const rect = el.getBoundingClientRect();
         const vh = window.innerHeight;
-
-        // Révélation : 0 quand le wordmark entre en bas du viewport, 1 quand il est remonté
         const p = 1 - Math.min(Math.max((rect.top - vh * 0.15) / (vh * 0.75), 0), 1);
-
-        // Bas de page : 0 quand le wordmark est révélé, 1 quand il colle au bas du viewport
         const q = 1 - Math.min(Math.max((rect.bottom - vh) / (vh * 0.22), 0), 1);
-
         setPq([p, q]);
       });
     };
@@ -54,39 +47,31 @@ function FooterWordmark() {
   }, []);
 
   const [p, q] = pq;
-  const letters = WORD.split("");
 
   return (
     <div ref={ref} className="overflow-hidden px-4 pb-2 pt-6">
       <div
         className={`footer-wordmark${q > 0.85 ? " wm-bottom" : ""}`}
         aria-label={WORD}
-        style={{
-          // Les lettres s'écartent doucement au fur et à mesure qu'on descend
-          letterSpacing: `${(-0.01 + q * 0.07).toFixed(3)}em`,
-          color: tint(q),
-        }}
+        style={{ letterSpacing: `${(-0.01 + q * 0.07).toFixed(3)}em` }}
       >
-        {letters.map((ch, i) => {
-          if (ch === " ") return <span key={i}>{"\u00A0"}</span>;
-
-          const n = letters.length;
-          const local = Math.min(Math.max((p * (n + 1.5) - i) / 1.5, 0), 1);
-
-          return (
-            <span key={i} className="wm-letter" style={{ animationDelay: `${i * 45}ms` }}>
-              <span className="wm-outline">{ch}</span>
-              <span className="wm-fill" style={{ opacity: local }} aria-hidden="true">
-                {ch}
-              </span>
-            </span>
-          );
-        })}
+        {WORD.split("").map((ch, i) => (
+          <span
+            key={i}
+            className="wm-letter"
+            style={{
+              animationDelay: `${i * 45}ms`,
+              opacity: Math.min(Math.max((p * 14 - i) / 1.5, 0), 1),
+              color: `oklch(${(0.19 + q * 0.26).toFixed(3)} ${(0.008 + q * 0.152).toFixed(3)} ${(45 - q * 15).toFixed(1)})`,
+            }}
+          >
+            {ch === " " ? "\u00A0" : ch}
+          </span>
+        ))}
       </div>
     </div>
   );
 }
-
 export function Footer() {
   return (
     <footer className="bg-amber text-coal">
