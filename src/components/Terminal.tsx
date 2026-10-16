@@ -121,7 +121,7 @@ export function Terminal({
               </span>
             ))}
             {i === visible.length - 1 && !done && (
-              <span className="animate-caret ml-0.5 inline-block h-[15px] w-2 align-middle bg-amber" />
+              <span className="animate-caret ml-0.5 inline-block h-[15px] w-2 align-middle bg-brand" />
             )}
           </div>
         ))}
@@ -129,3 +129,4 @@ export function Terminal({
     </div>
   );
 }
+
