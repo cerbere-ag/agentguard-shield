@@ -64,7 +64,7 @@ export function Observability() {
           {shots.map((shot) => (
             <Reveal key={shot.src}>
               <figure>
-                <div className="overflow-hidden rounded-lg border border-line-coal bg-coal shadow-[0_30px_80px_oklch(0.19_0.008_45/0.35)]">
+                <div className="overflow-hidden rounded-lg border border-line-black bg-coal shadow-[0_30px_80px_oklch(0.19_0.008_45/0.35)]">
                   <img
                     src={shot.src}
                     width={1600}
@@ -83,7 +83,7 @@ export function Observability() {
           ))}
         </div>
 
-        <div className="mt-12 grid gap-px border border-line-coal bg-line-coal md:grid-cols-3">
+        <div className="mt-12 grid gap-px border border-line-black bg-line-black md:grid-cols-3">
           {items.map((item) => (
             <Reveal key={item.tag} className="bg-amber p-8">
               <span className="font-mono text-[12.5px] font-semibold text-coal/60">{item.tag}</span>
@@ -96,3 +96,4 @@ export function Observability() {
     </section>
   );
 }
+
