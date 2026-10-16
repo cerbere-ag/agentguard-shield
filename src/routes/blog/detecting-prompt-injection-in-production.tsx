@@ -130,7 +130,7 @@ const limits = [
 
 function RecallBar({ name, pass, total }: { name: string; pass: number; total: number }) {
   const pct = (pass / total) * 100;
-  const color = pct === 100 ? "bg-allow" : pct >= 85 ? "bg-amber" : "bg-deny";
+  const color = pct === 100 ? "bg-allow" : pct >= 85 ? "bg-brand" : "bg-deny";
   return (
     <div className="grid grid-cols-[160px_1fr_52px] items-center gap-3 text-sm">
       <span className="font-mono text-[12.5px] text-paper/60">{name}</span>
@@ -305,7 +305,7 @@ function Post() {
         <div className="mt-4">
           {limits.map((l) => (
             <div key={l.t} className="flex gap-4 border-b border-line-black py-4 last:border-b-0">
-              <span className="mt-2 size-1.5 shrink-0 rounded-full bg-amber" />
+              <span className="mt-2 size-1.5 shrink-0 rounded-full bg-brand" />
               <p className="text-[14.5px] text-paper/70">
                 <strong className="text-paper">{l.t}:</strong> {l.d}
               </p>
