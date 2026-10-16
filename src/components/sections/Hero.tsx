@@ -28,14 +28,14 @@ export function Hero() {
             rel="noopener"
             className="inline-flex items-center gap-2.5 rounded-full border border-line-black bg-black/30 px-4 py-1.5 font-mono text-[12.5px] text-paper/75 transition-colors hover:border-amber hover:text-amber"
           >
-            <span className="size-1.5 rounded-full bg-amber" aria-hidden="true" />
+            <span className="size-1.5 rounded-full bg-brand" aria-hidden="true" />
             Open-source SDK, live on PyPI
             <span aria-hidden="true">→</span>
           </a>
 
           <h1 className="mx-auto mt-8 max-w-[19ch] text-[clamp(42px,7vw,92px)] leading-[1.03] tracking-tight">
             Give your agents autonomy,{" "}
-            <span className="text-[oklch(0.68_0.2_39.46)]">without giving up control.</span>
+            <span className="text-brand">without giving up control.</span>
           </h1>
 
           <p className="mx-auto mt-8 max-w-[62ch] text-[clamp(17px,1.5vw,20px)] text-paper/70">
@@ -49,7 +49,7 @@ export function Hero() {
           <div className="mt-10 flex flex-wrap items-center justify-center gap-3.5">
             <a
               href={APP + "/login"}
-              className="inline-flex items-center rounded-sm bg-[oklch(0.68_0.2_39.46)] px-6 py-3 font-mono text-sm text-ink transition-colors hover:bg-amber-deep"
+              className="inline-flex items-center rounded-sm bg-brand px-6 py-3 font-mono text-sm text-ink transition hover:brightness-110"
             >
               Get started free
             </a>
@@ -57,13 +57,13 @@ export function Hero() {
   href={GITHUB}
   target="_blank"
   rel="noopener"
-  className="inline-flex items-center rounded-sm border border-line-black px-6 py-3 font-mono text-sm transition-colors hover:border-[oklch(0.68_0.2_39.46)] hover:text-[oklch(0.68_0.2_39.46)]"
+  className="inline-flex items-center rounded-sm border border-line-black px-6 py-3 font-mono text-sm transition-colors hover:border-brand hover:text-brand"
 >
   View on GitHub
 </a>
 <a
   href={DOCS}
-  className="inline-flex items-center gap-2 px-3 py-3 font-mono text-sm text-paper/70 transition-colors hover:text-[oklch(0.68_0.2_39.46)]"
+  className="inline-flex items-center gap-2 px-3 py-3 font-mono text-sm text-paper/70 transition-colors hover:text-brand"
 >
   Read the docs <span aria-hidden="true">→</span>
 </a>
@@ -129,3 +129,4 @@ export function Hero() {
     </section>
   );
 }
+
