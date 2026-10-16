@@ -9,6 +9,7 @@
   --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
   --color-ink: var(--ink);
+  --text-amber: oklch(0.68 0.2 39.46)
   --color-paper: var(--paper);
   --color-cream: var(--cream);
   --color-coal: var(--coal);
