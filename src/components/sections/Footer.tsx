@@ -1,4 +1,3 @@
-import { useEffect, useRef, useState } from "react";
 import { APP, DOCS, GITHUB, INSTAGRAM_URL, LINKEDIN_URL, X_URL, YOUTUBE_URL } from "@/lib/constants";
 import logo from "@/assets/cerbere-logo.jpeg";
 
@@ -6,27 +5,6 @@ const linkColClass = "flex flex-col gap-2 font-mono text-[13px]";
 const linkClass = "opacity-75 hover:opacity-100";
 const headingClass = "mb-3 font-mono text-[11px] uppercase tracking-wider opacity-50";
 
-const WORD = "CERBERE AG";
-
-// Interpolation coal -> rouge profond (deny) dans l'espace OKLCH
-function tint(q: number) {
-  const l = 0.19 + q * 0.26; // 0.19 -> 0.45
-  const c = 0.008 + q * 0.152; // 0.008 -> 0.16
-  const h = 45 - q * 15; // 45 -> 30
-  return `oklch(${l.toFixed(3)} ${c.toFixed(3)} ${h.toFixed(1)})`;
-}
-
-function FooterWordmark() {
-  return (
-    <div className="px-4 pb-2 pt-6">
-      <img
-        src="/cerbere-ag.gif"
-        alt="CERBERE AG"
-        className="mx-auto w-full max-w-[900px]"
-      />
-    </div>
-  );
-}
 export function Footer() {
   return (
     <footer className="bg-amber text-coal">
