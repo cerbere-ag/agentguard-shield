@@ -13,6 +13,7 @@
   --color-cream: var(--cream);
   --color-coal: var(--coal);
   --color-amber: var(--amber);
+  --color-brand: var(--amber);
   --color-amber-surface: var(--amber-surface);
   --color-amber-deep: var(--amber-deep);
   --color-allow: var(--allow);
@@ -70,11 +71,11 @@
   --coal: oklch(0.98 0 0);
 
   /* Couleur du logo : texte, bordures, hover */
-  --amber: oklch(0.68 0.2 40.61);
+  --amber: oklch(0.692 0.2 39.8);
   /* Fond sombre utilisé par .bg-amber (l'ancienne valeur de --amber) */
   --amber-surface: oklch(0.13 0 0);
   /* Hover "deep" = même couleur que le logo */
-  --amber-deep: oklch(0.68 0.2 40.61);
+  --amber-deep: oklch(0.692 0.2 39.8);
 
   --allow: oklch(0.68 0.07 140);
   --deny: oklch(0.63 0.15 30);
@@ -184,9 +185,10 @@
    - text-amber / border-amber / ring  -> couleur du logo (via --amber)
    - bg-amber au repos                 -> fond sombre
    - bg-amber au survol                -> couleur du logo
+   - bg-brand / text-brand             -> couleur du logo, toujours (points, barres, CTA, caret)
    (volontairement hors @layer pour passer devant les utilitaires Tailwind) */
 .text-amber {
-  color: oklch(0.68 0.2 40.61);
+  color: var(--amber);
 }
 
 .bg-amber {
@@ -330,7 +332,7 @@
   top: 0;
   left: 0;
   height: 2px;
-  background: var(--amber, oklch(0.68 0.2 40.61));
+  background: var(--amber);
   z-index: 60;
   transform-origin: 0 50%;
   transition: transform 120ms linear;
@@ -383,7 +385,7 @@
   height: 44px;
   border: 1px solid color-mix(in oklab, var(--amber) 50%, transparent);
   background: rgb(10 10 12 / 0.85);
-  color: var(--amber, oklch(0.68 0.2 40.61));
+  color: var(--amber);
   cursor: pointer;
   opacity: 0;
   pointer-events: none;
@@ -398,7 +400,7 @@
 }
 
 .back-top:hover {
-  background: var(--amber, oklch(0.68 0.2 40.61));
+  background: var(--amber);
   color: rgb(10 10 12);
 }
 
@@ -449,38 +451,3 @@
   padding: 0 22px;
 }
 
-/* ===== v3.1 : wordmark footer dynamique (outline -> remplissage vague au scroll) ===== */
-/* ===== wordmark footer ===== */
-.footer-wordmark {
-  position: relative;
-  font-size: clamp(48px, 11.5vw, 190px);
-  line-height: 0.9;
-  font-weight: 800;
-  text-align: center;
-  user-select: none;
-  white-space: nowrap;
-  font-family: var(--font-display, inherit);
-  color: color-mix(in oklab, var(--paper) 15%, transparent); /* couleur de "repos" sur fond sombre */
-}
-
-.wm-letter {
-  display: inline-block;
-  animation: wm-rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
-  transition: color 0.15s linear;
-}
-
-@keyframes wm-rise {
-  from { transform: translateY(0.35em); }
-  to { transform: translateY(0); }
-}
-
-.wm-bottom {
-  text-shadow:
-    0 0 18px rgb(255 255 255 / 0.35),
-    0 0 60px rgb(255 255 255 / 0.18);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .wm-letter { animation: none; }
-  .wm-bottom { text-shadow: none; }
-}
