@@ -86,7 +86,7 @@ function StageCard({ stage }: { stage: Stage }) {
 
   return (
     <div className="group relative flex-1 border border-line-black bg-[oklch(0.17_0.004_60)] p-5 transition-all duration-300 hover:-translate-y-1 hover:border-amber/60 hover:shadow-[0_14px_44px_oklch(0.795_0.13_55/0.14)]">
-      <span className="absolute left-0 top-0 h-[2px] w-0 bg-amber transition-all duration-300 group-hover:w-full" />
+      <span className="absolute left-0 top-0 h-[2px] w-0 bg-brand transition-all duration-300 group-hover:w-full" />
 
       <div className="flex items-center justify-between">
         <span className="font-mono text-[11px] text-amber/70">{stage.n}</span>
@@ -137,7 +137,7 @@ function Flow({ dir, delay }: { dir: "x" | "y" | "x-left"; delay: number }) {
         aria-hidden="true"
       >
         <span
-          className="flow-anim-y absolute -left-[2.5px] size-1.5 rounded-full bg-amber"
+          className="flow-anim-y absolute -left-[2.5px] size-1.5 rounded-full bg-brand"
           style={{ animationDelay: `${delay}s` }}
         />
       </div>
@@ -150,7 +150,7 @@ function Flow({ dir, delay }: { dir: "x" | "y" | "x-left"; delay: number }) {
       aria-hidden="true"
     >
       <span
-        className={`flow-anim-x absolute -top-[2.5px] size-1.5 rounded-full bg-amber ${
+        className={`flow-anim-x absolute -top-[2.5px] size-1.5 rounded-full bg-brand ${
           dir === "x-left" ? "flow-reverse" : ""
         }`}
         style={{ animationDelay: `${delay}s` }}
@@ -200,3 +200,4 @@ export function HowItWorks() {
     </Reveal>
   );
 }
+
