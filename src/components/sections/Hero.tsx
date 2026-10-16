@@ -35,7 +35,7 @@ export function Hero() {
 
           <h1 className="mx-auto mt-8 max-w-[19ch] text-[clamp(42px,7vw,92px)] leading-[1.03] tracking-tight">
             Give your agents autonomy,{" "}
-            <span className="text-amber">without giving up control.</span>
+            <span className="text-[oklch(0.68_0.2_39.46)]">without giving up control.</span>
           </h1>
 
           <p className="mx-auto mt-8 max-w-[62ch] text-[clamp(17px,1.5vw,20px)] text-paper/70">
@@ -49,39 +49,39 @@ export function Hero() {
           <div className="mt-10 flex flex-wrap items-center justify-center gap-3.5">
             <a
               href={APP + "/login"}
-              className="inline-flex items-center rounded-sm bg-amber px-6 py-3 font-mono text-sm text-ink transition-colors hover:bg-amber-deep"
+              className="inline-flex items-center rounded-sm bg-[oklch(0.68_0.2_39.46)] px-6 py-3 font-mono text-sm text-ink transition-colors hover:bg-amber-deep"
             >
               Get started free
             </a>
-            <a
-              href={GITHUB}
-              target="_blank"
-              rel="noopener"
-              className="inline-flex items-center rounded-sm border border-line-black px-6 py-3 font-mono text-sm transition-colors hover:border-amber hover:text-amber"
-            >
-              View on GitHub
-            </a>
-            <a
-              href={DOCS}
-              className="inline-flex items-center gap-2 px-3 py-3 font-mono text-sm text-paper/70 transition-colors hover:text-amber"
-            >
-              Read the docs <span aria-hidden="true">→</span>
-            </a>
-          </div>
+           <a
+  href={GITHUB}
+  target="_blank"
+  rel="noopener"
+  className="inline-flex items-center rounded-sm border border-line-black px-6 py-3 font-mono text-sm transition-colors hover:border-[oklch(0.68_0.2_39.46)] hover:text-[oklch(0.68_0.2_39.46)]"
+>
+  View on GitHub
+</a>
+<a
+  href={DOCS}
+  className="inline-flex items-center gap-2 px-3 py-3 font-mono text-sm text-paper/70 transition-colors hover:text-[oklch(0.68_0.2_39.46)]"
+>
+  Read the docs <span aria-hidden="true">→</span>
+</a>
+</div>
 
-          <div className="mx-auto mt-9 grid max-w-3xl gap-3.5 text-left md:grid-cols-2">
-            <div>
-              <span className="mb-1.5 block font-mono text-[11px] uppercase tracking-wider text-paper/40">
-                Python SDK
-              </span>
-              <CopyableCode code="pip install cerbere-ag" />
-            </div>
-            <div>
-              <span className="mb-1.5 block font-mono text-[11px] uppercase tracking-wider text-paper/40">
-                MCP · Claude Code, Cursor and others
-              </span>
-              <CopyableCode code={MCP_INSTALL_CMD} />
-            </div>
+<div className="mx-auto mt-9 grid max-w-3xl gap-3.5 text-left md:grid-cols-2">
+<div>
+  <span className="mb-1.5 block font-mono text-[11px] uppercase tracking-wider text-paper/40">
+    Python SDK
+  </span>
+  <CopyableCode code="pip install cerbere-ag" />
+</div>
+<div>
+  <span className="mb-1.5 block font-mono text-[11px] uppercase tracking-wider text-paper/40">
+    MCP · Claude Code, Cursor and others
+  </span>
+  <CopyableCode code={MCP_INSTALL_CMD} />
+</div>
           </div>
         </Reveal>
 
