@@ -137,7 +137,7 @@ export function Pricing() {
                   "text-sm",
                   "transition-colors",
                   p.featured
-                    ? "bg-amber text-ink hover:bg-amber-deep"
+                    ? "bg-brand text-ink hover:brightness-110"
                     : "border border-line-black hover:border-amber hover:text-amber",
                 ].join(" ")}
               >
@@ -150,3 +150,4 @@ export function Pricing() {
     </section>
   );
 }
+
