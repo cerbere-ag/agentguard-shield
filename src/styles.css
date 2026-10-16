@@ -64,14 +64,14 @@
   --radius: 0.1875rem;
   --ink: oklch(0.145 0 0);
   --paper: oklch(0.945 0.017 70);
-  --cream: oklch(0.963 0.019 60);
-  --coal: oklch(0.19 0.008 45);
-  --amber: oklch(0.69 0.2 39.29);
+  --cream: oklch(0.14 0 0 / 0.22);
+  --coal: var(--tw-ring-offset-color);
+  --amber: oklch(0.13 0 0);
   --amber-deep: oklch(0.72 0.14 55);
   --allow: oklch(0.68 0.07 140);
   --deny: oklch(0.63 0.15 30);
   --line-on-black: oklch(0.945 0.017 70 / 14%);
-  --line-on-cream: oklch(0.19 0.008 45 / 14%);
+  --line-on-cream: oklch(0.14 0 0);
   --background: var(--ink);
   --foreground: var(--paper);
   --card: var(--coal);
