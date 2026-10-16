@@ -108,7 +108,6 @@ export function Footer() {
         </div>
       </div>
 
-      <FooterWordmark />
     </footer>
   );
 }
