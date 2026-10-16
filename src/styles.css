@@ -9,11 +9,11 @@
   --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
   --color-ink: var(--ink);
-  --text-amber: oklch(0.68 0.2 39.46)
   --color-paper: var(--paper);
   --color-cream: var(--cream);
   --color-coal: var(--coal);
   --color-amber: var(--amber);
+  --color-amber-surface: var(--amber-surface);
   --color-amber-deep: var(--amber-deep);
   --color-allow: var(--allow);
   --color-deny: var(--deny);
@@ -62,13 +62,20 @@
 }
 
 :root {
+  color-scheme: dark;
   --radius: 0.1875rem;
   --ink: oklch(0.145 0 0);
   --paper: oklch(0.945 0.017 70);
   --cream: oklch(0.14 0 0 / 0.22);
-  --coal: var(--tw-ring-offset-color);
-  --amber: oklch(0.13 0 0);
-  --amber-deep: oklch(0.72 0.14 55);
+  --coal: oklch(0.17 0 0);
+
+  /* Couleur du logo : texte, bordures, hover */
+  --amber: oklch(0.68 0.2 40.61);
+  /* Fond sombre utilisé par .bg-amber (l'ancienne valeur de --amber) */
+  --amber-surface: oklch(0.13 0 0);
+  /* Hover "deep" = même couleur que le logo */
+  --amber-deep: oklch(0.68 0.2 40.61);
+
   --allow: oklch(0.68 0.07 140);
   --deny: oklch(0.63 0.15 30);
   --line-on-black: oklch(0.945 0.017 70 / 14%);
@@ -171,6 +178,33 @@
     background: var(--amber);
     color: var(--ink);
   }
+}
+
+/* ===== Règle de couleur du logo =====
+   - text-amber / border-amber / ring  -> couleur du logo (via --amber)
+   - bg-amber au repos                 -> fond sombre
+   - bg-amber au survol                -> couleur du logo
+   (volontairement hors @layer pour passer devant les utilitaires Tailwind) */
+.text-amber {
+  color: oklch(0.68 0.2 40.61);
+}
+
+.bg-amber {
+  background-color: var(--amber-surface);
+}
+
+.bg-amber.text-ink {
+  color: var(--paper);
+}
+
+.hover\:bg-amber:hover,
+.group:hover .group-hover\:bg-amber {
+  background-color: var(--amber);
+}
+
+.bg-amber.text-ink:hover,
+.group:hover .bg-amber.text-ink {
+  color: var(--ink);
 }
 
 @utility wrap {
@@ -296,7 +330,7 @@
   top: 0;
   left: 0;
   height: 2px;
-  background: var(--amber, #d9a441);
+  background: var(--amber, oklch(0.68 0.2 40.61));
   z-index: 60;
   transform-origin: 0 50%;
   transition: transform 120ms linear;
@@ -347,9 +381,9 @@
   place-items: center;
   width: 44px;
   height: 44px;
-  border: 1px solid rgb(217 164 65 / 0.5);
+  border: 1px solid color-mix(in oklab, var(--amber) 50%, transparent);
   background: rgb(10 10 12 / 0.85);
-  color: var(--amber, #d9a441);
+  color: var(--amber, oklch(0.68 0.2 40.61));
   cursor: pointer;
   opacity: 0;
   pointer-events: none;
@@ -364,7 +398,7 @@
 }
 
 .back-top:hover {
-  background: var(--amber, #d9a441);
+  background: var(--amber, oklch(0.68 0.2 40.61));
   color: rgb(10 10 12);
 }
 
@@ -408,10 +442,10 @@
   max-width: 880px;
   height: 56px;
   border-radius: 999px;
-  border: 1px solid rgb(217 164 65 / 0.28);
+  border: 1px solid color-mix(in oklab, var(--amber) 28%, transparent);
   background: rgb(10 10 12 / 0.82);
   backdrop-filter: blur(14px);
-  box-shadow: 0 14px 40px oklch(0 0 0 / 0.45), 0 0 0 1px rgb(217 164 65 / 0.04);
+  box-shadow: 0 14px 40px oklch(0 0 0 / 0.45), 0 0 0 1px color-mix(in oklab, var(--amber) 4%, transparent);
   padding: 0 22px;
 }
 
@@ -426,7 +460,7 @@
   user-select: none;
   white-space: nowrap;
   font-family: var(--font-display, inherit);
-  color: rgb(20 17 12 / 0.15); /* couleur de "repos" (outline fantôme) */
+  color: color-mix(in oklab, var(--paper) 15%, transparent); /* couleur de "repos" sur fond sombre */
 }
 
 .wm-letter {
