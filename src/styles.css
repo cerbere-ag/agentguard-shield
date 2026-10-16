@@ -67,7 +67,7 @@
   --ink: oklch(0.145 0 0);
   --paper: oklch(0.945 0.017 70);
   --cream: oklch(0.14 0 0 / 0.22);
-  --coal: oklch(0.17 0 0);
+  --coal: oklch(0.98 0 0);
 
   /* Couleur du logo : texte, bordures, hover */
   --amber: oklch(0.68 0.2 40.61);
