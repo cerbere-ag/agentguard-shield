@@ -1,0 +1,56 @@
+# Cerbere AG
+
+> Cerbere AG is the runtime security and observability layer for AI agents. It sits between an agent and its tools (functions, APIs, MCP servers). Before every tool call runs, it decides whether the action is allowed, needs a human, or is blocked, and it records every decision in an audit log. The open-source engine and Python module inside Cerbere AG is called AgentGuard (Apache 2.0).
+
+Cerbere AG protects against prompt injection, data exfiltration, destructive commands, tool poisoning, excessive agency and budget overruns. Agents keep their autonomy; every action stays observable, explainable and enforceable.
+
+## How it works
+
+Every agent call is intercepted, classified, decided on by policy and risk, observed, and written to an audit log. One trace follows the call from invocation to audit log.
+
+- Intercept: the SDK or the MCP gateway captures the tool call before it executes.
+- Classify and score: input normalization, rules and patterns, ML detection, taint tracking, risk scoring, optional LLM judge.
+- Decide: a unified decision engine returns allow, block, or human approval (human-in-the-loop).
+- Observe: traces with arguments, checks that ran, decision and latency; dashboard with decisions per minute, blocked rate, cost, top threats.
+- Audit: searchable audit trail; decisions can be signed with Ed25519.
+- Also: atomic token budgets per agent, trajectory tracking, real-time alerts on Gmail or Slack.
+
+## Install
+
+- Python SDK: `pip install cerbere-ag`, then set `AGENTGUARD_API_KEY` (key from the dashboard).
+- MCP (Claude Code, Cursor and other MCP clients): `claude mcp add cerbereag --transport sse https://app.cerbereag.site/mcp/sse`
+- Integrations: Python, MCP, HTTP, Composio, OpenAI, Anthropic, LangGraph, CrewAI.
+
+## Deployment
+
+- Local: point the SDK at a local collector; nothing leaves your network.
+- Cerbere Cloud: hosted collector and dashboard.
+- Self-hosted license: inside your own infrastructure, with your own data residency and controls.
+
+## Pricing
+
+- Free, $0: 2 connected agents, local deployment only, prompt injection and exfiltration checks, 7-day audit trail, community support.
+- Pro, $49/month: 5 connected agents, local or cloud, real-time Gmail and Slack alerts, 90-day audit trail, signed security decisions, email support.
+- Team, $199/month: 10+ connected agents, local and cloud mixed, custom policies per agent, unlimited audit trail, SSO and role-based access, priority support.
+- Enterprise, custom: unlimited agents, self-hosted, SLA, custom retention and policies, compliance packages, dedicated ops channel.
+
+## Benchmark (public prompt injection set, published with methodology)
+
+- Regex layer: 91.5% recall, 0% false positives.
+- Regex + ML: 98.1% recall.
+- ML layer: 5% false positives on benign inputs, 33% on hard negatives; about 450 ms p95 latency.
+
+## Links
+
+- [Website](https://www.cerbereag.site): product overview, pricing, FAQ
+- [Documentation](https://www.cerbereag.site/docs): SDK and MCP setup
+- [Blog](https://www.cerbereag.site/blog): benchmark write-up, research, announcements
+- [Dashboard](https://app.cerbereag.site/login): sign in or start free
+- [GitHub](https://github.com/chrismsmr-celcom/cerbere-AG): open-source SDK and engine (Apache 2.0)
+- [PyPI](https://pypi.org/project/cerbere-ag/): `cerbere-ag` package
+
+## Contact
+
+- Email: christopher-ag@cerbereag.site
+- WhatsApp: +243 854 442 103
+- Founder: Christopher Dikesa
