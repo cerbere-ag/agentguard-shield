@@ -11,6 +11,8 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { jsonLdString } from "../lib/schema";
+import { registerWebMcpTools } from "../lib/webmcp";
 
 function NotFoundComponent() {
   return (
@@ -40,7 +42,6 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   useEffect(() => {
     reportLovableError(error, { boundary: "tanstack_root_error_component" });
   }, [error]);
-
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
@@ -84,6 +85,16 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "Cerbere AG sits between your AI agents and the actions they take. Prompt injection, data exfiltration and destructive commands stopped before they execute.",
       },
       { property: "og:type", content: "website" },
+      { property: "og:site_name", content: "Cerbere AG" },
+      {
+        property: "og:title",
+        content: "Cerbere AG | Runtime security and observability for AI agents",
+      },
+      {
+        property: "og:description",
+        content:
+          "Every agent tool call is checked, decided on and audited before it executes. Open-source SDK, live on PyPI.",
+      },
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
@@ -99,6 +110,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       { rel: "icon", type: "image/png", href: "/favicon.png" },
     ],
+    // Structured data, server-rendered in <head> so crawlers see it without running JS
+    scripts: [{ type: "application/ld+json", children: jsonLdString }],
   }),
   shellComponent: RootShell,
   component: RootComponent,
@@ -111,29 +124,28 @@ function RootShell({ children }: { children: ReactNode }) {
     <html lang="en">
       <head>
         <HeadContent />
-        
-        {/* 1. COLLEZ LE PREMIER SCRIPT GTM ICI (dans le <head>) */}
+
+        {/* Google Tag Manager (head) */}
         <script
           dangerouslySetInnerHTML={{
             __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-MK76ZMD6');`
+})(window,document,'script','dataLayer','GTM-MK76ZMD6');`,
           }}
         />
-        {/* Fin Google Tag Manager */}
-        
+        {/* End Google Tag Manager */}
       </head>
       <body>
-        {/* 2. COLLEZ LE SECOND SCRIPT GTM ICI (juste après l'ouverture de <body>) */}
+        {/* Google Tag Manager (noscript) */}
         <noscript
           dangerouslySetInnerHTML={{
             __html: `<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MK76ZMD6"
-height="0" width="0" style="display:none;visibility:hidden"></iframe>`
+height="0" width="0" style="display:none;visibility:hidden"></iframe>`,
           }}
         />
-        {/* Fin Google Tag Manager (noscript) */}
+        {/* End Google Tag Manager (noscript) */}
 
         {children}
         <Scripts />
@@ -142,9 +154,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe>`
   );
 }
 
-
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+
+  // WebMCP: expose read-only tools to in-browser agents (no-op where unsupported)
+  useEffect(() => registerWebMcpTools(), []);
 
   return (
     <QueryClientProvider client={queryClient}>
