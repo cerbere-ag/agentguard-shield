@@ -19,8 +19,24 @@ const faqs = [
     a: "Every agent action generates a signed trace. You can set atomic budgets per agent and receive Slack or Gmail alerts for anomalous behavior or cost overruns.",
   },
   {
-    q: "Can I try it for free before committing?",
-    a: "Absolutely. The Free plan lets you connect up to 2 agents with a 7-day audit history, no credit card required.",
+    q: "Can I try it before paying?",
+    a: "Yes. The open-source version is free to self-host with no action limits. You bring your own LLM and install it in minutes. Cloud plans add hosting, the dashboard and the signed audit trail.",
+  },
+  {
+    q: "What counts as a protected action?",
+    a: "Each tool call or prompt that Cerbere AG checks and records counts as one protected action. Plans are billed per workspace, so adding agents does not change your price.",
+  },
+  {
+    q: "What if my agent goes into a loop?",
+    a: "You pay for protected actions, not for LLM calls. If a single agent passes 10,000 actions an hour, we throttle it and alert you, so usage and cost stay bounded.",
+  },
+  {
+    q: "Why bill per protected action instead of per LLM call?",
+    a: "LLM calls are our cost, not your security. Most decisions run on the warm path without a model, and the LLM only arbitrates ambiguous cases. Each plan includes a quota for those, so your bill follows your agents' activity, not our model usage.",
+  },
+  {
+    q: "Is hosting included in the cloud plans?",
+    a: "Yes. Cloud plans include hosting, the dashboard and the audit trail, so you run no infrastructure. If you prefer to run it yourself, the open-source version is free to self-host.",
   },
   {
     q: "Does Cerbere AG add noticeable latency?",
