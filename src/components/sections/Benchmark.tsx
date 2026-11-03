@@ -1,12 +1,24 @@
 import { Reveal } from "@/components/Reveal";
 
 /* ------------------------------------------------------------------ *
- * Source of truth: cerbere-ag-public-benchmark v1.0.0 (SDK 0.5.0)
+ * Source of truth: cerbere-ag-public-benchmark v1.0.0 (SDK 0.6.1)
+ * cerbere-ag-corpus-2k · 1000 attacks · 703 benign · 300 hard negatives
  * ------------------------------------------------------------------ */
 
 const detectionRows = [
   {
-    corpus: "Internal corpus",
+    corpus: "Internal corpus 2k",
+    config: "Regex + ML",
+    n: "1000 attacks · 703 benign · 300 hard neg.",
+    recall: 100.0,
+    ci: "99.6 – 100",
+    fpr: "2.3%",
+    hn: "1.3%",
+    latency: "221 ms",
+    current: true,
+  },
+  {
+    corpus: "Internal corpus (previous run)",
     config: "Regex only",
     n: "300 attacks",
     recall: 44.0,
@@ -14,9 +26,10 @@ const detectionRows = [
     fpr: "0%",
     hn: "2.7%",
     latency: "0.5 ms",
+    current: false,
   },
   {
-    corpus: "Internal corpus",
+    corpus: "Internal corpus (previous run)",
     config: "Regex + ML + LLM",
     n: "500 attacks",
     recall: 99.4,
@@ -24,6 +37,7 @@ const detectionRows = [
     fpr: "0%",
     hn: "2.7%",
     latency: "2.4 s",
+    current: false,
   },
   {
     corpus: "External (deepset)",
@@ -34,6 +48,7 @@ const detectionRows = [
     fpr: "0%",
     hn: "n/a",
     latency: "0.3 s",
+    current: false,
   },
   {
     corpus: "External (deepset)",
@@ -44,6 +59,7 @@ const detectionRows = [
     fpr: "0%",
     hn: "n/a",
     latency: "0.2 s",
+    current: false,
   },
 ];
 
@@ -57,7 +73,7 @@ export function Benchmark() {
             What we catch, and what we miss.
           </h2>
           <p className="mt-3.5 max-w-[56ch] text-base text-coal/70">
-            Detection quality measured on our own corpus and on a frozen third-party set. We
+            Detection quality measured on our own 2k corpus and on a frozen third-party set. We
             publish the numbers where we fall short.
           </p>
         </Reveal>
@@ -69,8 +85,9 @@ export function Benchmark() {
             <span className="font-mono text-[12px] text-coal/55">recall with 95% CI</span>
           </div>
           <p className="mt-2 max-w-[64ch] text-[14.5px] text-coal/70">
-            Our own corpus is synthetic and templated, so it flatters us. The external run uses a
-            frozen third-party set we did not write, and it is the number to trust.
+            The current run uses our 2,000-prompt corpus (1,000 attacks, 703 benign, 300 hard
+            negatives). Our corpus is synthetic and templated, so it flatters us. The external
+            rows use a frozen third-party set we did not write, and they are the numbers to trust.
           </p>
         </Reveal>
 
@@ -90,10 +107,23 @@ export function Benchmark() {
               {detectionRows.map((r, i) => {
                 const external = r.corpus.startsWith("External");
                 return (
-                  <tr key={i} className="border-b border-line-cream/70 align-middle">
+                  <tr
+                    key={i}
+                    className={`border-b border-line-cream/70 align-middle ${r.current ? "bg-amber-deep/5" : "opacity-75"}`}
+                  >
                     <td className="py-3.5 pr-4">
-                      <div className="font-medium">{r.corpus}</div>
-                      <div className="font-mono text-[12px] text-coal/55">{r.n}</div>
+                      <div className="font-medium">
+                        {r.corpus}
+                        {r.current && (
+                          <span className="ml-2 rounded-sm bg-amber-deep px-1.5 py-0.5 font-mono text-[10px] uppercase tracking-wider text-cream">
+                            current
+                          </span>
+                        )}
+                      </div>
+                      <div className="font-mono text-[12px] text-coal/55">
+                        {r.n}
+                        {!r.current && " · SDK 0.5.0"}
+                      </div>
                     </td>
                     <td className="py-3.5 pr-4 font-mono text-[13px]">{r.config}</td>
                     <td className="py-3.5 pr-4">
@@ -126,15 +156,15 @@ export function Benchmark() {
           {[
             {
               t: "What we catch",
-              d: "Classic direct injections, exfiltration and system prompt extraction: 99.4% on our corpus, 0% false positives on benign traffic.",
+              d: "On the 2k corpus, Regex + ML catches 100% of attacks (CI 99.6–100) across all seven categories, including encoded/obfuscated payloads and indirect injection — with a 221 ms p50 latency.",
             },
             {
               t: "What we miss",
-              d: "On the external set many misses are role-play framing, embedded instructions in German and Spanish, and prompts labelled as attacks that look benign. Labels there are noisy.",
+              d: "No attack slipped through on this run. The cost moved to false positives: 2.3% of benign prompts and 1.3% of hard negatives were blocked — mostly French technical summaries and fiction about server intrusions.",
             },
             {
               t: "What we found",
-              d: "Adding an LLM arbiter lowered external recall from 35% to 21.7%: it cleared 8 real attacks as safe and never cleared a benign prompt, so it only cost us recall. We are reworking that layer.",
+              d: "The blocked benign prompts were kept fail-closed because the LLM arbiter was unavailable, so ML verdicts stood alone — with confidence scores up to 100% on harmless French prompts. The ML threshold needs rework; the fail-closed behaviour is working as designed.",
             },
           ].map(({ t, d }) => (
             <Reveal key={t} className="bg-cream p-6">
@@ -153,7 +183,8 @@ export function Benchmark() {
             <span aria-hidden>→</span>
           </a>
           <span className="font-mono text-[12px] text-coal/50">
-            cerbere-ag-public-benchmark v1.0.0 · SDK 0.5.0 · deepset/prompt-injections (test split)
+            cerbere-ag-public-benchmark v1.0.0 · SDK 0.6.1 · cerbere-ag-corpus-2k ·
+            deepset/prompt-injections (test split, SDK 0.5.0)
           </span>
         </Reveal>
       </div>
