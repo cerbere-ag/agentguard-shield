@@ -5,6 +5,7 @@ import { Topbar } from "@/components/sections/Topbar";
 import { Hero } from "@/components/sections/Hero";
 import { DecisionChain } from "@/components/sections/DecisionChain";
 import { SeeItWork } from "@/components/sections/SeeItWork";
+import { Overhead } from "@/components/sections/Overhead";
 import { Benchmark } from "@/components/sections/Benchmark";
 import { Research } from "@/components/sections/Research";
 import { Mission } from "@/components/sections/Mission";
@@ -49,6 +50,7 @@ function Index() {
       <Observability />
       <Integrations />
       <SeeItWork />
+      <Overhead />
       <Benchmark />
       <Research />
       <Deployment />
