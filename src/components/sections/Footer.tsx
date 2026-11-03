@@ -22,7 +22,7 @@ export function Footer() {
         </div>
 
         <div className="mt-6 flex items-center justify-center gap-4">
-          <a href={https://x.com/CerbereAg} target="_blank" rel="noopener" aria-label="Cerbere AG on X" className="flex size-9 items-center justify-center text-coal/70 transition-colors hover:text-coal">
+          <a href={www.x.com/CerbereAg} target="_blank" rel="noopener" aria-label="Cerbere AG on X" className="flex size-9 items-center justify-center text-coal/70 transition-colors hover:text-coal">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2.25h3.19l-6.97 7.97L23.4 21.75h-6.42l-5.03-6.58-5.75 6.58H2.99l7.46-8.53L1.6 2.25h6.58l4.55 6.02 6.17-6.02Zm-1.12 17.5h1.77L7.3 4.15H5.4l12.38 15.6Z" /></svg>
           </a>
           <a href={LINKEDIN_URL} target="_blank" rel="noopener" aria-label="Cerbere AG on LinkedIn" className="flex size-9 items-center justify-center text-coal/70 transition-colors hover:text-coal">
