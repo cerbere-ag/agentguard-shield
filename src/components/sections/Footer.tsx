@@ -22,13 +22,13 @@ export function Footer() {
         </div>
 
         <div className="mt-6 flex items-center justify-center gap-4">
-          <a href={X_URL} target="_blank" rel="noopener" aria-label="Cerbere AG on X" className="flex size-9 items-center justify-center text-coal/70 transition-colors hover:text-coal">
+          <a href={https://x.com/CerbereAg} target="_blank" rel="noopener" aria-label="Cerbere AG on X" className="flex size-9 items-center justify-center text-coal/70 transition-colors hover:text-coal">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2.25h3.19l-6.97 7.97L23.4 21.75h-6.42l-5.03-6.58-5.75 6.58H2.99l7.46-8.53L1.6 2.25h6.58l4.55 6.02 6.17-6.02Zm-1.12 17.5h1.77L7.3 4.15H5.4l12.38 15.6Z" /></svg>
           </a>
           <a href={LINKEDIN_URL} target="_blank" rel="noopener" aria-label="Cerbere AG on LinkedIn" className="flex size-9 items-center justify-center text-coal/70 transition-colors hover:text-coal">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.03-1.85-3.03-1.85 0-2.14 1.45-2.14 2.94v5.66H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29ZM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12ZM7.12 20.45H3.56V9h3.56v11.45Z" /></svg>
           </a>
-          <a href={YOUTUBE_URL} target="_blank" rel="noopener" aria-label="Cerbere AG on YouTube" className="flex size-9 items-center justify-center text-coal/70 transition-colors hover:text-coal">
+          <a href={www.youtube.com/@cerbereag} target="_blank" rel="noopener" aria-label="Cerbere AG on YouTube" className="flex size-9 items-center justify-center text-coal/70 transition-colors hover:text-coal">
             <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.38.55A3.02 3.02 0 0 0 .5 6.19 31.6 31.6 0 0 0 0 12a31.6 31.6 0 0 0 .5 5.81 3.02 3.02 0 0 0 2.12 2.14C4.5 20.5 12 20.5 12 20.5s7.5 0 9.38-.55a3.02 3.02 0 0 0 2.12-2.14A31.6 31.6 0 0 0 24 12a31.6 31.6 0 0 0-.5-5.81ZM9.6 15.6V8.4l6.27 3.6-6.27 3.6Z" /></svg>
           </a>
           <a href={INSTAGRAM_URL} target="_blank" rel="noopener" aria-label="Cerbere AG on Instagram" className="flex size-9 items-center justify-center text-coal/70 transition-colors hover:text-coal">
@@ -53,6 +53,7 @@ export function Footer() {
             <div className={headingClass}>Resources</div>
             <div className={linkColClass}>
               <a href="/blog" className={linkClass}>Blog</a>
+              <a href="#overhead" className={linkClass}>Overhead</a>
               <a href="#benchmark" className={linkClass}>Benchmark</a>
               <a href="#research" className={linkClass}>Research</a>
               <a href={GITHUB} target="_blank" rel="noopener" className={linkClass}>GitHub</a>
