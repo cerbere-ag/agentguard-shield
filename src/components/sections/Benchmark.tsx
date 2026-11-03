@@ -2,23 +2,7 @@ import { Reveal } from "@/components/Reveal";
 
 /* ------------------------------------------------------------------ *
  * Source of truth: cerbere-ag-public-benchmark v1.0.0 (SDK 0.5.0)
- * Speed run: 200 calls/scenario, collector app.cerbereag.site
  * ------------------------------------------------------------------ */
-
-const speedHeadline = [
-  { label: "p50", value: "0.34", unit: "ms" },
-  { label: "p95", value: "0.86", unit: "ms" },
-  { label: "p99", value: "0.96", unit: "ms" },
-];
-
-const speedRows = [
-  { scenario: "Warm", n: 200, p50: 0.3376, p95: 0.8575, p99: 0.9597, max: 1.4202 },
-  { scenario: "Concurrent", n: 200, p50: 0.3857, p95: 1.0481, p99: 1.2174, max: 1.3088 },
-  { scenario: "Stale", n: 5, p50: 0.8012, p95: 1.998, p99: 1.998, max: 1.998 },
-  { scenario: "Cold start", n: 10, p50: 269.789, p95: 356.5741, p99: 356.5741, max: 356.5741 },
-];
-
-const fmt = (v: number) => (v >= 100 ? v.toFixed(0) : v >= 10 ? v.toFixed(1) : v.toFixed(2));
 
 const detectionRows = [
   {
@@ -70,71 +54,16 @@ export function Benchmark() {
         <Reveal className="max-w-2xl">
           <span className="eyebrow">benchmark</span>
           <h2 className="mt-3 text-[clamp(26px,3.4vw,36px)]">
-            Fast on the hot path. Honest about detection.
+            What we catch, and what we miss.
           </h2>
           <p className="mt-3.5 max-w-[56ch] text-base text-coal/70">
-            Two things matter for a guard that sits in front of every tool call: how much time it
-            adds, and what it actually catches. We measured both, and we publish the numbers where
-            we fall short.
-          </p>
-        </Reveal>
-
-        {/* ------------------------- SPEED ------------------------- */}
-        <Reveal className="mt-14">
-          <div className="flex items-baseline justify-between gap-4">
-            <h3 className="text-xl">Latency overhead</h3>
-            <span className="font-mono text-[12px] text-coal/55">200 calls per scenario</span>
-          </div>
-        </Reveal>
-
-        <div className="mt-5 grid gap-px border border-line-cream bg-line-cream sm:grid-cols-3">
-          {speedHeadline.map(({ label, value, unit }) => (
-            <Reveal key={label} className="bg-cream p-7">
-              <span className="font-mono text-[12px] font-semibold text-amber-deep">
-                {label}, warm path
-              </span>
-              <div className="mt-3 font-display text-[44px] leading-none">
-                {value}
-                <span className="ml-1.5 text-[20px] text-coal/55">{unit}</span>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-
-        <Reveal className="mt-6 overflow-x-auto">
-          <table className="w-full min-w-[560px] border-collapse text-left text-[14px]">
-            <thead>
-              <tr className="border-b border-line-cream font-mono text-[11.5px] uppercase tracking-wider text-coal/50">
-                <th className="py-2.5 pr-4 font-medium">Scenario</th>
-                <th className="py-2.5 pr-4 text-right font-medium">n</th>
-                <th className="py-2.5 pr-4 text-right font-medium">p50</th>
-                <th className="py-2.5 pr-4 text-right font-medium">p95</th>
-                <th className="py-2.5 pr-4 text-right font-medium">p99</th>
-                <th className="py-2.5 text-right font-medium">max</th>
-              </tr>
-            </thead>
-            <tbody className="font-mono">
-              {speedRows.map((r) => (
-                <tr key={r.scenario} className="border-b border-line-cream/70">
-                  <td className="py-3 pr-4 font-sans font-medium">{r.scenario}</td>
-                  <td className="py-3 pr-4 text-right text-coal/60">{r.n}</td>
-                  <td className="py-3 pr-4 text-right">{fmt(r.p50)} ms</td>
-                  <td className="py-3 pr-4 text-right">{fmt(r.p95)} ms</td>
-                  <td className="py-3 pr-4 text-right">{fmt(r.p99)} ms</td>
-                  <td className="py-3 text-right text-coal/60">{fmt(r.max)} ms</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <p className="mt-4 max-w-[68ch] text-[13.5px] text-coal/65">
-            415 of 415 events delivered to the collector, none failed or dropped. The cold start
-            only happens on the first call; after that the warm path stays under a millisecond at
-            p99, including under concurrent load.
+            Detection quality measured on our own corpus and on a frozen third-party set. We
+            publish the numbers where we fall short.
           </p>
         </Reveal>
 
         {/* ------------------------ DETECTION ------------------------ */}
-        <Reveal className="mt-16">
+        <Reveal className="mt-14">
           <div className="flex items-baseline justify-between gap-4">
             <h3 className="text-xl">Detection quality</h3>
             <span className="font-mono text-[12px] text-coal/55">recall with 95% CI</span>
