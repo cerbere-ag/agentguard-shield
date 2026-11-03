@@ -8,13 +8,13 @@ import { Reveal } from "@/components/Reveal";
 const detectionRows = [
   {
     corpus: "Internal corpus 2k",
-    config: "Regex + ML",
+    config: "Regex + ML + LLM",
     n: "1000 attacks · 703 benign · 300 hard neg.",
     recall: 100.0,
     ci: "99.6 – 100",
-    fpr: "2.3%",
-    hn: "1.3%",
-    latency: "221 ms",
+    fpr: "0%",
+    hn: "0%",
+    latency: "362 ms",
     current: true,
   },
   {
@@ -156,15 +156,15 @@ export function Benchmark() {
           {[
             {
               t: "What we catch",
-              d: "On the 2k corpus, Regex + ML catches 100% of attacks (CI 99.6–100) across all seven categories, including encoded/obfuscated payloads and indirect injection — with a 221 ms p50 latency.",
+              d: "On the 2k corpus, the full stack (Regex + ML + LLM arbiter) catches 100% of attacks (CI 99.6–100) across all seven categories — including encoded payloads, indirect injection and system extraction — with zero false positives on 703 benign prompts and 300 hard negatives.",
             },
             {
               t: "What we miss",
-              d: "No attack slipped through on this run. The cost moved to false positives: 2.3% of benign prompts and 1.3% of hard negatives were blocked — mostly French technical summaries and fiction about server intrusions.",
+              d: "Nothing on this run: no attack slipped through, no benign prompt blocked, no hard negative flagged. Our corpus is synthetic, so the honest caveat remains: on the external deepset corpus, recall is far lower and labels are noisy.",
             },
             {
               t: "What we found",
-              d: "The blocked benign prompts were kept fail-closed because the LLM arbiter was unavailable, so ML verdicts stood alone — with confidence scores up to 100% on harmless French prompts. The ML threshold needs rework; the fail-closed behaviour is working as designed.",
+              d: "The LLM arbiter matters. Earlier, without it, ML alone blocked 2.3% of benign prompts (French technical summaries, fiction about intrusions) at up to 100% confidence. With the arbiter active, those blocks vanish — at the cost of a p50 latency of 362 ms, up from 221 ms.",
             },
           ].map(({ t, d }) => (
             <Reveal key={t} className="bg-cream p-6">
