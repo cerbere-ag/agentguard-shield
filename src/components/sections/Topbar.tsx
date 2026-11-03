@@ -40,6 +40,9 @@ export function Topbar() {
           <a href="#integrations" className="hidden font-mono text-sm text-paper/70 transition-colors hover:text-amber sm:block">
             Integrations
           </a>
+          <a href="#overhead" className="hidden font-mono text-sm text-paper/70 transition-colors hover:text-amber sm:block">
+            Overhead
+          </a>
           <a href="#benchmark" className="hidden font-mono text-sm text-paper/70 transition-colors hover:text-amber sm:block">
             Benchmark
           </a>
