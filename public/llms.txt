@@ -27,18 +27,19 @@ Every agent call is intercepted, classified, decided on by policy and risk, obse
 - Cerbere Cloud: hosted collector and dashboard.
 - Self-hosted license: inside your own infrastructure, with your own data residency and controls.
 
-## Pricing
+## Pricing (billed monthly, USD, per workspace, unlimited agents)
 
-- Free, $0: 2 connected agents, local deployment only, prompt injection and exfiltration checks, 7-day audit trail, community support.
-- Pro, $49/month: 5 connected agents, local or cloud, real-time Gmail and Slack alerts, 90-day audit trail, signed security decisions, email support.
-- Team, $199/month: 10+ connected agents, local and cloud mixed, custom policies per agent, unlimited audit trail, SSO and role-based access, priority support.
-- Enterprise, custom: unlimited agents, self-hosted, SLA, custom retention and policies, compliance packages, dedicated ops channel.
+- Open Source, $0: self-hosted, unlimited actions, bring your own LLM, community support.
+- Pro, $199/month: 100,000 protected actions, 5,000 LLM analyses included, dashboard, signed audit trail, Slack support.
+- Team, $599/month: 500,000 protected actions, 25,000 LLM analyses included, dashboard with 5 seats, signed audit export, priority Slack.
+- Enterprise, custom, from $2,500/month: 5M+ actions (fair use), unlimited LLM analyses with on-prem option, SSO, 1-year audit retention, SLA.
+- Overage: $0.02 per extra LLM analysis, $0.50 per 1,000 extra actions.
 
-## Benchmark (public prompt injection set, published with methodology)
+## Benchmark (cerbere-ag-public-benchmark v1.0.0, methodology published)
 
-- Regex layer: 91.5% recall, 0% false positives.
-- Regex + ML: 98.1% recall.
-- ML layer: 5% false positives on benign inputs, 33% on hard negatives; about 450 ms p95 latency.
+- Latency overhead: 0.34 ms p50, 0.96 ms p99 on the warm path (200 calls per scenario); cold start about 270 ms on the first call.
+- Detection, internal corpus: 99.4% recall with regex + ML + LLM, 0% false positives on benign traffic.
+- Detection, external deepset/prompt-injection test set: 35.0% recall with regex + ML, 21.7% when the LLM arbiter is added. Published as-is.
 
 ## Links
 
