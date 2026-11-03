@@ -2,9 +2,9 @@ export const SITE_URL = "https://www.cerbereag.site";
 export const APP_URL = "https://app.cerbereag.site";
 
 export const PLANS = [
-  { name: "Free", price: "0", summary: "2 connected agents, local deployment only, prompt injection and exfiltration checks, 7-day audit trail, community support." },
-  { name: "Pro", price: "49", summary: "5 connected agents, local or cloud, real-time Gmail and Slack alerts, 90-day audit trail, signed decisions, email support." },
-  { name: "Team", price: "199", summary: "10+ connected agents, local and cloud, custom policies per agent, unlimited audit trail, SSO and RBAC, priority support." },
+  { name: "Open Source", price: "0", summary: "Self-hosted, unlimited actions, bring your own LLM, community support on Discord." },
+  { name: "Pro", price: "199", summary: "100,000 protected actions per month, 5,000 LLM analyses included, dashboard, signed audit trail, Slack support." },
+  { name: "Team", price: "599", summary: "500,000 protected actions per month, 25,000 LLM analyses included, dashboard with 5 seats, signed audit export, priority Slack." },
 ] as const;
 
 export const jsonLd = {
