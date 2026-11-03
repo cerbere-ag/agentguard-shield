@@ -8,6 +8,7 @@ import { SeeItWork } from "@/components/sections/SeeItWork";
 import { Overhead } from "@/components/sections/Overhead";
 import { Benchmark } from "@/components/sections/Benchmark";
 import { Research } from "@/components/sections/Research";
+import { AgentPrompt } from "@/components/sections/AgentPrompt";
 import { Mission } from "@/components/sections/Mission";
 import { Observability } from "@/components/sections/Observability";
 import { Deployment } from "@/components/sections/Deployment";
@@ -45,6 +46,7 @@ function Index() {
       <ScrollProgress />
       <Topbar />
       <Hero />
+      <AgentPrompt />
       <Mission />
       <DecisionChain />
       <Observability />
