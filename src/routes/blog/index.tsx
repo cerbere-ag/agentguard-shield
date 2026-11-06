@@ -20,11 +20,20 @@ export const Route = createFileRoute("/blog/")({
 
 const posts = [
   {
+    slug: "why-a-cloud-guardrail-is-a-contradiction",
+    title: "Why a cloud guardrail is a contradiction",
+    dek: "To protect you, most AI security tools ask you to send them exactly what you are trying to protect. Why trust should be unnecessary, and why Cerbère AG is self-hosted by design.",
+    date: "2026-11-06",
+    tag: "opinion",
+    cta: "Read the post →",
+  },
+  {
     slug: "detecting-prompt-injection-in-production",
     title: "Detecting prompt injection in production: our first public benchmark",
     dek: "91.5% recall at sub-millisecond latency from regex alone, 98.1% with a ML layer bolted on — and the false positives that come with it. Full methodology, mapped to the OWASP Top 10 for LLM Applications.",
     date: "2026-09-26",
     tag: "benchmark",
+    cta: "Read the benchmark →",
   },
 ];
 
@@ -70,7 +79,7 @@ function BlogIndex() {
                   {p.title}
                 </h2>
                 <p className="mt-3 max-w-2xl text-[15px] text-paper/65">{p.dek}</p>
-                <span className="mt-5 inline-block font-mono text-sm text-amber">Read the benchmark →</span>
+                <span className="mt-5 inline-block font-mono text-sm text-amber">{p.cta}</span>
               </Link>
             </Reveal>
           ))}
