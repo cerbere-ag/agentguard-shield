@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as DocsRouteImport } from './routes/docs'
 import { Route as BlogIndexRouteImport } from './routes/blog/index'
+import { Route as BlogWhyACloudGuardrailIsAContradictionRouteImport } from './routes/blog/why-a-cloud-guardrail-is-a-contradiction'
 import { Route as BlogDetectingPromptInjectionInProductionRouteImport } from './routes/blog/detecting-prompt-injection-in-production'
 
 const IndexRoute = IndexRouteImport.update({
@@ -29,6 +30,12 @@ const BlogIndexRoute = BlogIndexRouteImport.update({
   path: '/blog/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BlogWhyACloudGuardrailIsAContradictionRoute =
+  BlogWhyACloudGuardrailIsAContradictionRouteImport.update({
+    id: '/blog/why-a-cloud-guardrail-is-a-contradiction',
+    path: '/blog/why-a-cloud-guardrail-is-a-contradiction',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const BlogDetectingPromptInjectionInProductionRoute =
   BlogDetectingPromptInjectionInProductionRouteImport.update({
     id: '/blog/detecting-prompt-injection-in-production',
@@ -40,12 +47,14 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/docs': typeof DocsRoute
   '/blog/detecting-prompt-injection-in-production': typeof BlogDetectingPromptInjectionInProductionRoute
+  '/blog/why-a-cloud-guardrail-is-a-contradiction': typeof BlogWhyACloudGuardrailIsAContradictionRoute
   '/blog/': typeof BlogIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/docs': typeof DocsRoute
   '/blog/detecting-prompt-injection-in-production': typeof BlogDetectingPromptInjectionInProductionRoute
+  '/blog/why-a-cloud-guardrail-is-a-contradiction': typeof BlogWhyACloudGuardrailIsAContradictionRoute
   '/blog': typeof BlogIndexRoute
 }
 export interface FileRoutesById {
@@ -53,19 +62,30 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/docs': typeof DocsRoute
   '/blog/detecting-prompt-injection-in-production': typeof BlogDetectingPromptInjectionInProductionRoute
+  '/blog/why-a-cloud-guardrail-is-a-contradiction': typeof BlogWhyACloudGuardrailIsAContradictionRoute
   '/blog/': typeof BlogIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/docs' | '/blog/detecting-prompt-injection-in-production' | '/blog/'
+    | '/'
+    | '/docs'
+    | '/blog/detecting-prompt-injection-in-production'
+    | '/blog/why-a-cloud-guardrail-is-a-contradiction'
+    | '/blog/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/docs' | '/blog/detecting-prompt-injection-in-production' | '/blog'
+  to:
+    | '/'
+    | '/docs'
+    | '/blog/detecting-prompt-injection-in-production'
+    | '/blog/why-a-cloud-guardrail-is-a-contradiction'
+    | '/blog'
   id:
     | '__root__'
     | '/'
     | '/docs'
     | '/blog/detecting-prompt-injection-in-production'
+    | '/blog/why-a-cloud-guardrail-is-a-contradiction'
     | '/blog/'
   fileRoutesById: FileRoutesById
 }
@@ -73,6 +93,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DocsRoute: typeof DocsRoute
   BlogDetectingPromptInjectionInProductionRoute: typeof BlogDetectingPromptInjectionInProductionRoute
+  BlogWhyACloudGuardrailIsAContradictionRoute: typeof BlogWhyACloudGuardrailIsAContradictionRoute
   BlogIndexRoute: typeof BlogIndexRoute
 }
 
@@ -99,6 +120,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/blog/why-a-cloud-guardrail-is-a-contradiction': {
+      id: '/blog/why-a-cloud-guardrail-is-a-contradiction'
+      path: '/blog/why-a-cloud-guardrail-is-a-contradiction'
+      fullPath: '/blog/why-a-cloud-guardrail-is-a-contradiction'
+      preLoaderRoute: typeof BlogWhyACloudGuardrailIsAContradictionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/blog/detecting-prompt-injection-in-production': {
       id: '/blog/detecting-prompt-injection-in-production'
       path: '/blog/detecting-prompt-injection-in-production'
@@ -114,6 +142,8 @@ const rootRouteChildren: RootRouteChildren = {
   DocsRoute: DocsRoute,
   BlogDetectingPromptInjectionInProductionRoute:
     BlogDetectingPromptInjectionInProductionRoute,
+  BlogWhyACloudGuardrailIsAContradictionRoute:
+    BlogWhyACloudGuardrailIsAContradictionRoute,
   BlogIndexRoute: BlogIndexRoute,
 }
 export const routeTree = rootRouteImport
